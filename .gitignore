@@ -1,0 +1,26 @@
+# 绝不入库：密钥
+.env
+.env.*
+*.key
+secrets.*
+
+# 依赖与缓存
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# 音频产物：COS 是唯一真相源，仓库不存大文件
+audio/
+*.wav
+*.mp3
+!assets/cover.jpg
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+*.log
+_tmp/
+data/_*

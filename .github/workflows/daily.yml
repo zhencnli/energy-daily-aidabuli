@@ -1,0 +1,104 @@
+name: Energy Daily
+
+# 北京时间 = UTC + 8
+#   主触发 06:37（cron '37 22 * * *'  UTC）   —— 预留 30~45 分钟延迟余量
+#   兜底触发 07:25（cron '25 23 * * *'  UTC） —— pipeline 幂等，当天已生成则自动跳过
+on:
+  schedule:
+    - cron: '37 22 * * *'
+    - cron: '25 23 * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'force regenerate even if today episode exists'
+        type: boolean
+        default: false
+
+concurrency:
+  group: energy-daily
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write          # 用于把 episodes.json / report 提交回仓库
+
+    env:
+      TZ: Asia/Shanghai
+      TENCENT_COS_SECRET_ID:  ${{ secrets.TENCENT_COS_SECRET_ID }}
+      TENCENT_COS_SECRET_KEY: ${{ secrets.TENCENT_COS_SECRET_KEY }}
+      TENCENT_COS_REGION:     ${{ secrets.TENCENT_COS_REGION }}
+      TENCENT_COS_BUCKET:     ${{ secrets.TENCENT_COS_BUCKET }}
+      LLM_API_KEY:            ${{ secrets.DEEPSEEK_API_KEY }}
+      LLM_BASE_URL:           ${{ secrets.LLM_BASE_URL || 'https://api.deepseek.com' }}
+      LLM_MODEL:              ${{ secrets.LLM_MODEL || 'deepseek-v4-flash' }}
+      SEARCH_PROVIDER:        ${{ secrets.SEARCH_PROVIDER || 'tavily' }}
+      TAVILY_API_KEY:         ${{ secrets.TAVILY_API_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Install python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install COS node sdk
+        run: npm install cos-nodejs-sdk-v5 --no-audit --no-fund
+
+      - name: Patch config for cloud runtime
+        run: |
+          python - <<'PY'
+          import json, os
+          p = 'config.json'
+          c = json.load(open(p, encoding='utf-8'))
+          c['node_bin'] = 'node'                     # 本机是绝对路径，云端用 PATH 里的 node
+          c['python_bin'] = 'python'
+          json.dump(c, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+          print('patched node_bin ->', c['node_bin'])
+          PY
+
+      - name: Run pipeline
+        id: pipeline
+        run: |
+          python scripts/pipeline.py ${{ inputs.force == true && '--force' || '' }}
+
+      - name: Commit state back to repo
+        run: |
+          git config user.name  "energy-daily-bot"
+          git config user.email "aidabuli@agent.qq.com"
+          git add data/episodes.json data/english_words.json report/ assets/ 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(daily): $(date +%F) episode state"
+            git push
+            echo "committed"
+          else
+            echo "no state change"
+          fi
+
+      - name: Upload artifacts (3 days, for troubleshooting)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: energydaily-${{ github.run_number }}
+          retention-days: 3
+          if-no-files-found: warn
+          path: |
+            report/*.md
+            report/*.script.txt
+            audio/*.mp3
