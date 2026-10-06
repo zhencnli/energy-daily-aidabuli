@@ -264,12 +264,16 @@ def main():
 
     log(f"目标日期: {date} (Asia/Shanghai)")
 
-    if not args.force and already_published(date):
+    # 幂等守卫：dry-run 不写 COS，无需绕过，直接放行即可
+    if not args.dry_run and not args.force and already_published(date):
         log("当天 MP3 已存在于 COS，跳过（幂等）。需要重跑请加 --force")
         return 0
 
     # 1) 搜集
     provider = os.environ.get("SEARCH_PROVIDER", "tavily")
+    if provider == "tavily" and not os.environ.get("TAVILY_API_KEY", ""):
+        log("⚠️  未配置 TAVILY_API_KEY，检索将返回空；"
+            "建议把 Secret SEARCH_PROVIDER 设为 rss 免费用 RSS 兜底")
     news = collect_news(provider)
     log(f"检索到候选 {len(news)} 条（provider={provider}）")
     if not news:

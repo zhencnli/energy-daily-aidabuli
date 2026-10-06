@@ -51,9 +51,22 @@ git branch -M main && git push -u origin main
 | `SEARCH_PROVIDER` | 可选 | `tavily`（默认）／ `rss` ／ `none` |
 | `LLM_MODEL` | 可选 | 默认 `deepseek-v4-flash`；想要更好质量填 `deepseek-v4-pro` |
 
-### 3. 手动验证一次
-Actions → **Energy Daily** → Run workflow → 看日志。
-确认产出与本机一致后再放行自动运行。
+### 3. 手动验证（务必分两步，别一步到位）
+
+**第 1 步 · 安全冒烟（不碰 COS）**
+Actions → Energy Daily → Run workflow →
+`force` ✅ 勾、`dry_run` ✅ 勾 → Run。
+
+这一步走「检索 → LLM → 生成图文与口播稿」，**不合成、不上传**。
+下载 `energydaily-<run_number>` 里的 `report/*.md`，与本机稿件逐条比对质量。
+只要这一步失败（缺少 Secret、网络不通、JSON 解析失败），都不可能影响线上 feed。
+
+**第 2 步 · 真刀真枪**
+`dry_run` 确认没问题后，只勾 `force`、**不勾** `dry_run` 再跑一次。
+这一步会合成 MP3/WAV 并上传 COS、更新 RSS。
+
+> ⚠️ 当天已经出过一期时，勾选 `force` 会用云端稿件**覆盖**当天那一期。
+> 所以第一次跑建议挑「当天还没出刊」的时候，或者接受覆盖。
 
 ### 4. 观察与切换
 - 前 3 天：本机与云端并行，逐条比对稿件质量

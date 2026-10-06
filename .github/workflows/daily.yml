@@ -13,6 +13,10 @@ on:
         description: 'force regenerate even if today episode exists'
         type: boolean
         default: false
+      dry_run:
+        description: 'SAFE test: generate text only, skip TTS and COS publishing'
+        type: boolean
+        default: false
 
 concurrency:
   group: energy-daily
@@ -76,7 +80,9 @@ jobs:
       - name: Run pipeline
         id: pipeline
         run: |
-          python scripts/pipeline.py ${{ inputs.force == true && '--force' || '' }}
+          python scripts/pipeline.py \
+            ${{ inputs.force == true && '--force' || '' }} \
+            ${{ inputs.dry_run == true && '--dry-run' || '' }}
 
       - name: Commit state back to repo
         run: |
