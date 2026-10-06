@@ -38,5 +38,8 @@ jobs:
       - name: Upload logo.jpg
         run: node scripts/cos_upload.mjs upload --file site/logo.jpg --key logo.jpg --content-type image/jpeg
 
+      - name: Upload xiaoyuzhou-qr.jpg (energy-daily/ 前缀，避免桶根策略限制)
+        run: node scripts/cos_upload.mjs upload --file site/xiaoyuzhou-qr.jpg --key energy-daily/xiaoyuzhou-qr.jpg --content-type image/jpeg
+
       - name: Done
         run: echo "官网已更新 https://aili-1500638180.cos-website.ap-shanghai.myqcloud.com/"

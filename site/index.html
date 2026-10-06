@@ -58,6 +58,24 @@
   }
   .tag.live { background: #e6f4ea; color: #137a3c; }
   .tag.live:hover { background: #137a3c; color: #ffffff; }
+  .listen { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 12px; }
+  .listen a {
+    display: block; text-align: left; text-decoration: none;
+    border: 1px solid #e6e8eb; border-radius: 12px; padding: 14px 16px;
+    color: #1c1e21; transition: border-color .15s, background .15s, transform .15s;
+  }
+  .listen a:hover { border-color: #1a6fd4; background: #f7faff; transform: translateY(-1px); }
+  .listen .li-name { font-size: 15px; font-weight: 600; }
+  .listen .li-sub { font-size: 12px; color: #6b7280; margin-top: 2px; }
+  .qrbox {
+    display: flex; align-items: center; gap: 16px; text-align: left;
+    border: 1px solid #e6e8eb; border-radius: 12px; padding: 14px 16px; margin: 0 0 28px;
+    text-decoration: none; color: inherit; transition: border-color .15s, background .15s;
+  }
+  .qrbox:hover { border-color: #1a6fd4; background: #f7faff; }
+  .qrbox img { width: 104px; height: 104px; border-radius: 8px; flex: none; background: #fff; }
+  .qrbox .qt { font-size: 14px; color: #3d434d; line-height: 1.6; }
+  .qrbox .qt b { display: block; font-size: 15px; color: #1c1e21; margin-bottom: 3px; }
   footer { margin-top: 28px; font-size: 13px; color: #8b9099; }
   @media (max-width: 520px) {
     .wrap { padding: 32px 16px 48px; }
@@ -65,6 +83,7 @@
     .logo { width: 168px; height: 168px; border-radius: 16px; }
     h1 { font-size: 24px; }
     .show { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .listen { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -97,6 +116,22 @@
           <span class="tag">即将上线</span>
         </li>
       </ul>
+
+      <h2>订阅收听</h2>
+      <div class="listen">
+        <a href="https://podcasts.apple.com/us/podcast/ai%E7%AD%94%E4%B8%8D%E9%94%82/id6819293080" target="_blank" rel="noopener">
+          <div class="li-name">Apple Podcasts</div>
+          <div class="li-sub">全球平台 · 已上架</div>
+        </a>
+        <a href="https://namecard.xiaoyuzhoufm.com/bcjvl" target="_blank" rel="noopener">
+          <div class="li-name">小宇宙</div>
+          <div class="li-sub">中文播客 · 已上架</div>
+        </a>
+      </div>
+      <a class="qrbox" href="https://namecard.xiaoyuzhoufm.com/bcjvl" target="_blank" rel="noopener">
+        <img src="https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/xiaoyuzhou-qr.jpg" alt="小宇宙 · AI答不锂 节目名片二维码">
+        <div class="qt"><b>小宇宙 · 扫码收听</b>用微信或小宇宙 App 扫一扫，直达「AI答不锂」节目名片</div>
+      </a>
     </div>
     <footer>© 2026 AI答不锂　|　仅代表个人观点，不构成投资参考</footer>
   </div>
