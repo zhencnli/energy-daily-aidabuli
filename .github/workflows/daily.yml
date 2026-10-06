@@ -38,6 +38,7 @@ jobs:
       LLM_API_KEY:            ${{ secrets.DEEPSEEK_API_KEY }}
       LLM_BASE_URL:           ${{ secrets.LLM_BASE_URL || 'https://api.deepseek.com' }}
       LLM_MODEL:              ${{ secrets.LLM_MODEL || 'deepseek-v4-flash' }}
+      LLM_MAX_TOKENS:         ${{ secrets.LLM_MAX_TOKENS || '32000' }}
       SEARCH_PROVIDER:        ${{ secrets.SEARCH_PROVIDER || 'tavily' }}
       TAVILY_API_KEY:         ${{ secrets.TAVILY_API_KEY }}
 

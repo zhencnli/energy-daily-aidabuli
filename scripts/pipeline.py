@@ -172,12 +172,14 @@ def collect_rss():
 
 
 # ---------------------------------------------------------------- 大模型
-def call_llm(messages, max_tokens=8000, retries=3, json_mode=True):
+def call_llm(messages, max_tokens=None, retries=3, json_mode=True):
     base = os.environ.get("LLM_BASE_URL", "https://api.deepseek.com").rstrip("/")
     key = os.environ.get("LLM_API_KEY", "")
     model = os.environ.get("LLM_MODEL", "deepseek-v4-flash")
     if not key:
         sys.exit("缺少 LLM_API_KEY")
+    if max_tokens is None:
+        max_tokens = int(os.environ.get("LLM_MAX_TOKENS", "32000"))
 
     payload = {
         "model": model,
@@ -200,7 +202,8 @@ def call_llm(messages, max_tokens=8000, retries=3, json_mode=True):
                 timeout=300,
             )
             resp.raise_for_status()
-            return resp.json()["choices"][0]["message"]["content"]
+            choice = resp.json()["choices"][0]
+            return choice["message"]["content"], choice.get("finish_reason", "")
         except Exception as exc:
             last = exc
             log(f"LLM 第 {attempt + 1} 次失败: {exc}")
@@ -208,15 +211,24 @@ def call_llm(messages, max_tokens=8000, retries=3, json_mode=True):
     sys.exit(f"LLM 调用最终失败: {last}")
 
 
-def extract_json(text):
+def extract_json(text, finish_reason=""):
     text = (text or "").strip()
     m = re.search(r"```(?:json)?\s*(\{.*\})\s*```", text, re.S)
     if m:
         text = m.group(1)
     i, j = text.find("{"), text.rfind("}")
     if i < 0 or j < 0:
-        sys.exit("LLM 未返回 JSON")
-    return json.loads(text[i:j + 1])
+        if finish_reason == "length":
+            sys.exit("LLM 输出被 max_tokens 截断（连一个完整的 JSON 对象都没生成）。"
+                     "提高 Secret LLM_MAX_TOKENS，或减少单次喂给模型的候选条数。")
+        sys.exit(f"LLM 未返回 JSON（finish_reason={finish_reason!r}）。"
+                 f"输出前 300 字符：{text[:300]!r}")
+    try:
+        return json.loads(text[i:j + 1])
+    except Exception as exc:
+        if finish_reason == "length":
+            sys.exit(f"LLM 输出被 max_tokens 截断，JSON 不完整：{exc}")
+        sys.exit(f"JSON 解析失败：{exc}；输出尾部 300 字符：{text[-300:]!r}")
 
 
 SYSTEM_PROMPT = """你是「AI答不锂」新能源行业每日简报的主笔主播老锂。风格：专业、务实、说人话、不夸大。
@@ -288,11 +300,14 @@ def main():
             used_words = []
 
     # 3) 生成
-    raw = call_llm([
+    raw, finish = call_llm([
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": build_prompt(date, news, used_words)},
     ])
-    data = extract_json(raw)
+    log(f"LLM 返回 {len(raw)} 字符，finish_reason={finish!r}")
+    if finish == "length":
+        sys.exit("LLM 输出被截断，本期放弃发布（不会产出半成品）")
+    data = extract_json(raw, finish)
     for key in ("title", "summary", "report_md", "script_txt", "word"):
         if not data.get(key):
             sys.exit(f"LLM 输出缺少字段: {key}")
