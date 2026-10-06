@@ -36,7 +36,9 @@
         "cos:ListParts"
       ],
       "resource": [
-        "qcs::cos:ap-shanghai:uid/1500638180:aili-1500638180/*"
+        "qcs::cos:ap-shanghai:uid/1500638180:aili-1500638180/energy-daily/*",
+        "qcs::cos:ap-shanghai:uid/1500638180:aili-1500638180/index.html",
+        "qcs::cos:ap-shanghai:uid/1500638180:aili-1500638180/logo.jpg"
       ]
     }
   ]
