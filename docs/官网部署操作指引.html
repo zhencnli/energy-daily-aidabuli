@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>官网部署操作指引 · AI答不锂</title>
+<style>
+  :root{
+    --bg:#f6f8fb; --card:#ffffff; --ink:#1f2a37; --sub:#5b6b7d;
+    --line:#e3e8ef; --brand:#0b6bcb; --brand-soft:#e8f1fd;
+    --ok:#15803d; --ok-soft:#e7f6ec; --warn:#b45309; --warn-soft:#fdf2e2;
+    --code:#0f172a; --code-bg:#0f172a; --code-ink:#e2e8f0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.65;}
+  .wrap{max-width:960px;margin:0 auto;padding:28px 20px 64px;}
+  h1{font-size:26px;margin:0 0 6px}
+  h2{font-size:20px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--brand)}
+  h3{font-size:16px;margin:20px 0 8px;color:var(--brand)}
+  p{margin:8px 0}
+  .lead{color:var(--sub);font-size:15px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:18px 20px;margin:14px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .step{display:flex;gap:14px;align-items:flex-start;margin:16px 0}
+  .num{flex:0 0 30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px}
+  .step-body{flex:1}
+  .note{border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px}
+  .note.ok{background:var(--ok-soft);border:1px solid #bfe6cb;color:#14532d}
+  .note.warn{background:var(--warn-soft);border:1px solid #f3d9a6;color:#7c3d12}
+  .note.info{background:var(--brand-soft);border:1px solid #cfe2fb;color:#0b4a8f}
+  code,.code{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;font-size:13px}
+  pre{background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:14px 16px;
+    overflow:auto;font-size:13px;line-height:1.5}
+  pre .hi{background:#14532d;color:#bbf7d0;padding:1px 4px;border-radius:4px;display:inline-block}
+  .mock{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+  .mock .cap{font-size:13px;color:var(--sub);margin-top:8px}
+  svg{display:block;max-width:100%;height:auto}
+  .pill{display:inline-block;background:var(--brand-soft);color:var(--brand);
+    border:1px solid #cfe2fb;border-radius:999px;padding:2px 10px;font-size:13px;margin:2px 4px 2px 0}
+  .foot{color:var(--sub);font-size:13px;margin-top:30px;border-top:1px solid var(--line);padding-top:14px}
+  a{color:var(--brand)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>官网部署操作指引</h1>
+  <p class="lead">「AI答不锂」官网改版已完成并推送到 GitHub，但<strong>新官网还没上线</strong>。
+  原因：上传官网文件（<code>index.html</code> / <code>logo.jpg</code>）需要写入 COS 桶<strong>根目录</strong>，
+  而你的 COS 子账号策略只放行了 <code>energy-daily/*</code> 前缀，导致部署被拒（AccessDenied）。</p>
+
+  <div class="note.warn">
+    <strong>你只需要做 2 步：</strong>
+    ① 在腾讯云 CAM 把更新后的策略重新应用到子账号（放开桶根写入）；
+    ② 在 GitHub Actions 手动跑一次 <code>Deploy site</code>。
+    做完后新官网上线，其余全自动由云端完成。
+  </div>
+
+  <h2>总览：为什么必须你来做</h2>
+  <div class="mock">
+    <svg viewBox="0 0 880 150" role="img" aria-label="流程图">
+      <defs>
+        <marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#0b6bcb"/>
+        </marker>
+      </defs>
+      <!-- nodes -->
+      <g font-family="sans-serif">
+        <rect x="10" y="48" width="180" height="54" rx="10" fill="#fff" stroke="#e3e8ef"/>
+        <text x="100" y="72" text-anchor="middle" font-size="13" fill="#5b6b7d">当前：官网=旧版</text>
+        <text x="100" y="90" text-anchor="middle" font-size="11" fill="#b45309">文件在仓库，未上传</text>
+
+        <rect x="240" y="48" width="190" height="54" rx="10" fill="#e8f1fd" stroke="#0b6bcb"/>
+        <text x="335" y="70" text-anchor="middle" font-size="13" fill="#0b4a8f">① 改 CAM 策略</text>
+        <text x="335" y="90" text-anchor="middle" font-size="11" fill="#0b4a8f">放开桶根写入</text>
+
+        <rect x="480" y="48" width="190" height="54" rx="10" fill="#e8f1fd" stroke="#0b6bcb"/>
+        <text x="575" y="70" text-anchor="middle" font-size="13" fill="#0b4a8f">② 跑 Deploy site</text>
+        <text x="575" y="90" text-anchor="middle" font-size="11" fill="#0b4a8f">GitHub Actions</text>
+
+        <rect x="720" y="48" width="150" height="54" rx="10" fill="#e7f6ec" stroke="#15803d"/>
+        <text x="795" y="72" text-anchor="middle" font-size="13" fill="#14532d">新官网上线</text>
+        <text x="795" y="90" text-anchor="middle" font-size="11" fill="#14532d">仅你这步手动</text>
+
+        <line x1="190" y1="75" x2="236" y2="75" stroke="#0b6bcb" stroke-width="2" marker-end="url(#ar)"/>
+        <line x1="430" y1="75" x2="476" y2="75" stroke="#0b6bcb" stroke-width="2" marker-end="url(#ar)"/>
+        <line x1="670" y1="75" x2="716" y2="75" stroke="#0b6bcb" stroke-width="2" marker-end="url(#ar)"/>
+      </g>
+    </svg>
+    <div class="cap">第 ① 步是安全策略变更，只能由你在腾讯云控制台操作，我无法代做；第 ② 步是云端部署触发器。</div>
+  </div>
+
+  <h2>第 ① 步 · 腾讯云 CAM 重新应用策略</h2>
+  <p>目标：让 COS 子账号（密钥 <code>SecretId</code> 以 <code>AKIDTyGLCr…</code> 开头，即我们新建的专用子账号）拥有桶根 <code>index.html</code> / <code>logo.jpg</code> 的写入权限。</p>
+
+  <div class="step">
+    <div class="num">1</div>
+    <div class="step-body">
+      <h3>打开访问管理 CAM</h3>
+      <p>浏览器访问 <a href="https://console.cloud.tencent.com/cam/overview" target="_blank">console.cloud.tencent.com/cam/overview</a> ，左侧菜单进入「用户 → 用户列表」。</p>
+      <div class="mock">
+        <svg viewBox="0 0 720 240" role="img" aria-label="CAM 用户列表">
+          <rect x="0" y="0" width="720" height="240" rx="10" fill="#f7f9fc" stroke="#e3e8ef"/>
+          <!-- sidebar -->
+          <rect x="0" y="0" width="170" height="240" fill="#0f1f3d"/>
+          <text x="16" y="26" font-size="13" fill="#9fb3d1" font-family="sans-serif">访问管理 CAM</text>
+          <text x="16" y="58" font-size="12" fill="#cdd9ec" font-family="sans-serif">概览</text>
+          <text x="16" y="84" font-size="12" fill="#ffffff" font-family="sans-serif" font-weight="700">▸ 用户</text>
+          <text x="28" y="104" font-size="11" fill="#7fd0a0" font-family="sans-serif">• 用户列表</text>
+          <text x="28" y="122" font-size="11" fill="#9fb3d1" font-family="sans-serif">• 用户组</text>
+          <text x="16" y="152" font-size="12" fill="#cdd9ec" font-family="sans-serif">策略</text>
+          <text x="16" y="178" font-size="12" fill="#cdd9ec" font-family="sans-serif">角色</text>
+          <!-- main -->
+          <rect x="186" y="18" width="510" height="30" rx="6" fill="#fff" stroke="#e3e8ef"/>
+          <text x="198" y="38" font-size="13" fill="#1f2a37" font-family="sans-serif" font-weight="700">用户列表</text>
+          <rect x="186" y="60" width="510" height="26" rx="6" fill="#eef3fa"/>
+          <text x="196" y="78" font-size="11" fill="#5b6b7d" font-family="sans-serif">用户名</text>
+          <text x="360" y="78" font-size="11" fill="#5b6b7d" font-family="sans-serif">SecretId</text>
+          <text x="520" y="78" font-size="11" fill="#5b6b7d" font-family="sans-serif">操作</text>
+          <rect x="186" y="90" width="510" height="30" rx="6" fill="#fff" stroke="#cfe2fb"/>
+          <text x="196" y="110" font-size="12" fill="#1f2a37" font-family="sans-serif">energy-daily-bot</text>
+          <text x="360" y="110" font-size="11" fill="#0b4a8f" font-family="monospace">AKIDTyGLCr…</text>
+          <text x="520" y="110" font-size="12" fill="#0b6bcb" font-family="sans-serif">查看 ›</text>
+          <text x="196" y="150" font-size="12" fill="#b45309" font-family="sans-serif">↑ 点击这一行进入子账号详情</text>
+          <rect x="186" y="168" width="510" height="58" rx="8" fill="#fdf2e2" stroke="#f3d9a6"/>
+          <text x="198" y="190" font-size="12" fill="#7c3d12" font-family="sans-serif">在子账号详情页，切到「权限」Tab，找到已绑定的</text>
+          <text x="198" y="210" font-size="12" fill="#7c3d12" font-family="sans-serif">自定义策略（如 energy-daily-cos），点「编辑」。</text>
+        </svg>
+        <div class="cap">找到密钥以 AKIDTyGLCr 开头的子账号 → 点进去 →「权限」Tab。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div class="step-body">
+      <h3>把策略更新为最新版本（关键）</h3>
+      <p>在策略编辑框里，把 <code>PutObject</code> 那段 <code>resource</code> 数组<strong>整体替换为下面这份</strong>（或直接把仓库里 <code>docs/cos-cam-policy.json</code> 的内容整段粘贴）。重点是新增的两条<strong>桶根</strong>资源：</p>
+      <pre><span class="hi">"qcs::cos:ap-shanghai:uid/1500638180:aili-1500638180/index.html",</span>
+<span class="hi">"qcs::cos:ap-shanghai:uid/1500638180:aili-1500638180/logo.jpg"</span></pre>
+      <div class="mock">
+        <svg viewBox="0 0 720 200" role="img" aria-label="策略编辑">
+          <rect x="0" y="0" width="720" height="200" rx="10" fill="#fff" stroke="#e3e8ef"/>
+          <text x="16" y="26" font-size="13" fill="#1f2a37" font-family="sans-serif" font-weight="700">编辑策略（JSON）</text>
+          <rect x="16" y="40" width="688" height="140" rx="8" fill="#0f172a"/>
+          <text x="28" y="62" font-size="12" fill="#93a4b8" font-family="monospace">"resource": [</text>
+          <text x="40" y="82" font-size="12" fill="#cbd5e1" font-family="monospace">"...aili-1500638180/energy-daily/*",</text>
+          <rect x="36" y="90" width="640" height="22" fill="#14532d"/>
+          <text x="40" y="106" font-size="12" fill="#bbf7d0" font-family="monospace">"…aili-1500638180/index.html",      ← 新增</text>
+          <rect x="36" y="114" width="640" height="22" fill="#14532d"/>
+          <text x="40" y="130" font-size="12" fill="#bbf7d0" font-family="monospace">"…aili-1500638180/logo.jpg"        ← 新增</text>
+          <text x="28" y="156" font-size="12" fill="#93a4b8" font-family="monospace">]</text>
+          <rect x="540" y="166" width="120" height="28" rx="6" fill="#15803d"/>
+          <text x="600" y="185" text-anchor="middle" font-size="13" fill="#fff" font-family="sans-serif">保存</text>
+        </svg>
+        <div class="cap">绿色高亮的两行就是「放开桶根写入」的本质。保存后权限即时生效。</div>
+      </div>
+      <div class="note.info">如果之前是「按策略语法创建」的自定义策略，也可在 CAM「策略 → 自定义策略」里找到它直接编辑；或在「用户 → 权限」里<strong>新建并关联</strong>一份新策略、再解除旧策略。</div>
+    </div>
+  </div>
+
+  <h2>第 ② 步 · GitHub Actions 手动运行 Deploy site</h2>
+  <p>策略生效后，触发部署。因为这次改动没动 <code>site/</code> 目录，<code>site.yml</code> 不会自动跑，需要你手动触发一次。</p>
+
+  <div class="step">
+    <div class="num">1</div>
+    <div class="step-body">
+      <h3>打开仓库的 Actions 页</h3>
+      <p>访问 <a href="https://github.com/zhencnli/energy-daily-aidabuli/actions" target="_blank">github.com/zhencnli/energy-daily-aidabuli/actions</a> ，左侧工作流列表选中 <strong>Deploy site</strong>。</p>
+      <div class="mock">
+        <svg viewBox="0 0 720 210" role="img" aria-label="GitHub Actions">
+          <rect x="0" y="0" width="720" height="210" rx="10" fill="#0d1117" stroke="#30363d"/>
+          <text x="16" y="26" font-size="14" fill="#e6edf3" font-family="sans-serif" font-weight="700">Actions</text>
+          <!-- left list -->
+          <rect x="16" y="40" width="220" height="26" rx="6" fill="#161b22" stroke="#30363d"/>
+          <text x="28" y="58" font-size="12" fill="#e6edf3" font-family="sans-serif">Daily pipeline</text>
+          <rect x="16" y="72" width="220" height="26" rx="6" fill="#1f6feb"/>
+          <text x="28" y="90" font-size="12" fill="#fff" font-family="sans-serif">▸ Deploy site</text>
+          <rect x="16" y="104" width="220" height="26" rx="6" fill="#161b22" stroke="#30363d"/>
+          <text x="28" y="122" font-size="12" fill="#e6edf3" font-family="sans-serif">…</text>
+          <!-- right panel -->
+          <rect x="252" y="40" width="452" height="30" rx="6" fill="#161b22" stroke="#30363d"/>
+          <text x="266" y="60" font-size="13" fill="#e6edf3" font-family="sans-serif" font-weight="700">Deploy site</text>
+          <rect x="252" y="84" width="452" height="30" rx="6" fill="#238636"/>
+          <text x="420" y="104" text-anchor="middle" font-size="13" fill="#fff" font-family="sans-serif" font-weight="700">Run workflow ▾</text>
+          <rect x="252" y="128" width="452" height="62" rx="8" fill="#161b22" stroke="#30363d"/>
+          <text x="266" y="150" font-size="12" fill="#9da7b3" font-family="sans-serif">分支：main  ✓</text>
+          <text x="266" y="174" font-size="12" fill="#9da7b3" font-family="sans-serif">点击 Run workflow 即可（无需填参数）</text>
+        </svg>
+        <div class="cap">左侧选 Deploy site → 右侧点「Run workflow」，确认分支是 main，再点一次 Run workflow。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div class="step-body">
+      <h3>等待变绿并验证</h3>
+      <p>约 30–60 秒后出现绿色 ✓ 即成功。验证：</p>
+      <p><span class="pill">看运行日志最后一行</span><span class="pill">Last-Modified 时间变新</span><span class="pill">页面含「AI答不锂」+ 邮箱</span></p>
+      <div class="note.ok">成功后官网文件已写入桶根。可用 <code>curl -I https://aili-1500638180.cos-website.ap-shanghai.myqcloud.com/</code> 看 <code>Last-Modified</code> 是否为今天。</div>
+    </div>
+  </div>
+
+  <h2>已知问题 · 浏览器会「下载」而非「渲染」官网</h2>
+  <div class="note.warn">
+    2024 年后建的 COS 桶，用默认 / 静态网站域名访问<strong>任何</strong>对象都会被腾讯云强制追加
+    <code>Content-Disposition: attachment</code>，所以浏览器打开官网会<strong>下载 index.html</strong> 而不是显示页面。
+    这是腾讯云策略，与本次部署无关。<br><br>
+    <strong>根治方案</strong>（单独任务，未做）：按 <code>docs/Apple Podcasts 提交清单.md</code> 配置 Cloudflare 边缘代理，
+    再把 <code>config.cos.public_base</code> 设为该代理地址，feed 内链接会自动改写。
+    在此之前，官网虽已上线，但建议用「查看源代码 / 下载后打开」或经代理访问来查看。
+  </div>
+
+  <h2>兜底 · 如果还失败</h2>
+  <ul>
+    <li>跑完 Deploy site 仍是红色 / AccessDenied：说明第 ① 步策略没保存成功或绑错了子账号。回到 CAM 确认<strong>绑定到 AKIDTyGLCr 子账号</strong>的那条策略确实含桶根两行。</li>
+    <li>策略已对但仍失败：在 GitHub Actions 的 Secrets 确认 <code>TENCENT_COS_SECRET_ID/KEY</code> 填的是<strong>子账号</strong>密钥（主账号密钥已禁用）。</li>
+    <li>不确定改对了没：把 CAM 里该策略的 JSON 贴给我，我帮你核对。</li>
+  </ul>
+
+  <div class="foot">
+    本指引对应仓库提交 <code>f3d87c7</code>（更新 docs/cos-cam-policy.json）。改动文件：<code>docs/cos-cam-policy.json</code>、<code>.github/workflows/site.yml</code>。
+    完成后日常更新官网只需改 <code>site/</code> 并提交，云端自动部署，无需再手动跑。
+  </div>
+
+</div>
+</body>
+</html>
