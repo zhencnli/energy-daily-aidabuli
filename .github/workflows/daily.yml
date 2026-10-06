@@ -17,6 +17,10 @@ on:
         description: 'SAFE test: generate text only, skip TTS and COS publishing'
         type: boolean
         default: false
+      rss_only:
+        description: 'rebuild RSS from stored episodes only (no new content)'
+        type: boolean
+        default: false
 
 concurrency:
   group: energy-daily
@@ -78,8 +82,13 @@ jobs:
           print('patched node_bin ->', c['node_bin'])
           PY
 
+      - name: Rebuild RSS only
+        if: ${{ inputs.rss_only }}
+        run: python scripts/publish.py --rss-only
+
       - name: Run pipeline
         id: pipeline
+        if: ${{ !inputs.rss_only }}
         run: |
           python scripts/pipeline.py \
             ${{ inputs.force == true && '--force' || '' }} \

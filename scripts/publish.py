@@ -206,14 +206,17 @@ def render_rss(cfg, episodes, env):
 def main():
     cfg = load_config()
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mp3", required=True)
+    ap.add_argument("--mp3")
     ap.add_argument("--wav", default=None)
-    ap.add_argument("--title", required=True)
+    ap.add_argument("--title")
     ap.add_argument("--summary", default="")
     ap.add_argument("--subtitle", default="新能源每日播报")
-    ap.add_argument("--date", required=True, help="YYYY-MM-DD")
+    ap.add_argument("--date", help="YYYY-MM-DD")
     ap.add_argument("--duration", type=float, default=0.0, help="秒")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--rss-only", action="store_true",
+                    help="不传音频、不改 episodes.json，仅按现有台账重建并上传 RSS"
+                         "（改了 config 里的品牌信息后用它即时生效）")
     args = ap.parse_args()
 
     # 必须把 os.environ 也带上：云端没有 .env，只有环境变量。
@@ -221,6 +224,30 @@ def main():
     # 把错误域名写进线上 RSS 的封面与 feed 自引用链接。
     env = dict(os.environ)
     env.update(load_env())
+
+    if args.rss_only:
+        eps = load_episodes()
+        xml = render_rss(cfg, eps, env)
+        import tempfile
+        tmp = os.path.join(tempfile.gettempdir(), "podcast-rebuild.xml")
+        with open(tmp, "w", encoding="utf-8") as f:
+            f.write(xml)
+        r = cos(cfg, ["upload", "--file", tmp, "--key", cfg["cos"]["key_rss"],
+                      "--content-type", "application/rss+xml; charset=utf-8"], args.dry_run)
+        if not r.get("ok"):
+            print(json.dumps({"ok": False, "stage": "upload-rss", "detail": r}, ensure_ascii=False))
+            return 1
+        print(json.dumps({
+            "ok": True, "rss_only": True,
+            "feed_url": f"{public_base(cfg, env)}/{cfg['cos']['key_rss']}",
+            "episode_count": len(eps),
+        }, ensure_ascii=False, indent=2))
+        return 0
+
+    for missing in ("mp3", "title", "date"):
+        if not getattr(args, missing):
+            ap.error(f"缺少 --{missing}（--rss-only 模式才不需要）")
+
     c = cfg["cos"]
     base_name = cfg["naming"]["audio_basename"].format(date=args.date)
     key_mp3 = f"{c['prefix_audio']}/{base_name}.mp3"

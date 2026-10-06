@@ -1,0 +1,42 @@
+name: Deploy site
+
+# 官网静态文件托管在桶根目录（静态网站索引文档为 index.html）。
+# 因此本工作流需要 CAM 策略放开桶根，而不只是 energy-daily/ 前缀。
+on:
+  push:
+    branches: [main]
+    paths: ['site/**']
+  workflow_dispatch:
+
+env:
+  TZ: Asia/Shanghai
+  TENCENT_COS_SECRET_ID:  ${{ secrets.TENCENT_COS_SECRET_ID }}
+  TENCENT_COS_SECRET_KEY: ${{ secrets.TENCENT_COS_SECRET_KEY }}
+  TENCENT_COS_REGION:     ${{ secrets.TENCENT_COS_REGION }}
+  TENCENT_COS_BUCKET:     ${{ secrets.TENCENT_COS_BUCKET }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install COS node sdk
+        run: npm install cos-nodejs-sdk-v5 --no-audit --no-fund
+
+      - name: Upload index.html
+        run: node scripts/cos_upload.mjs upload --file site/index.html --key index.html --content-type "text/html; charset=utf-8"
+
+      - name: Upload logo.jpg
+        run: node scripts/cos_upload.mjs upload --file site/logo.jpg --key logo.jpg --content-type image/jpeg
+
+      - name: Done
+        run: echo "官网已更新 https://aili-1500638180.cos-website.ap-shanghai.myqcloud.com/"

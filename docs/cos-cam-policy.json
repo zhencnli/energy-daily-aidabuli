@@ -1,0 +1,43 @@
+{
+  "version": "2.0",
+  "statement": [
+    {
+      "effect": "allow",
+      "action": [
+        "cos:GetService"
+      ],
+      "resource": [
+        "*"
+      ]
+    },
+    {
+      "effect": "allow",
+      "action": [
+        "cos:HeadBucket",
+        "cos:GetBucket"
+      ],
+      "resource": [
+        "qcs::cos:ap-shanghai:uid/1500638180:aili-1500638180/*"
+      ]
+    },
+    {
+      "effect": "allow",
+      "action": [
+        "cos:PutObject",
+        "cos:GetObject",
+        "cos:HeadObject",
+        "cos:DeleteObject",
+        "cos:PutObjectACL",
+        "cos:InitiateMultipartUpload",
+        "cos:UploadPart",
+        "cos:CompleteMultipartUpload",
+        "cos:AbortMultipartUpload",
+        "cos:ListMultipartUploads",
+        "cos:ListParts"
+      ],
+      "resource": [
+        "qcs::cos:ap-shanghai:uid/1500638180:aili-1500638180/*"
+      ]
+    }
+  ]
+}

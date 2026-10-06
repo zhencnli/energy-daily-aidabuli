@@ -24,3 +24,9 @@ Thumbs.db
 *.log
 _tmp/
 data/_*
+
+# 私人材料：身份证照片、平台认证截图等，仅留本机，绝不入库
+_private/
+*.csv
+密钥*.txt
+*密钥*.txt

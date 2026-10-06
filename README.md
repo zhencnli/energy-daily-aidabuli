@@ -24,6 +24,13 @@ https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/podcast.xml
 | `data/episodes.json` | 各期元数据，**状态文件**，由 Actions 自动提交 |
 | `data/english_words.json` | 已用英语单词台账，避免重复 |
 | `report/` | 历史图文与口播稿归档 |
+| `site/` | 官网静态文件（`index.html` + `logo.jpg`），托管在**桶根目录** |
+| `docs/` | 方案、成本测算、Apple 提交清单、CAM 策略等文档 |
+| `tools/` | 辅助脚本（如剥离 COS 强制下载头的 Cloudflare Worker） |
+| `_private/` | 身份证照片、平台认证截图等私人材料，**已 gitignore** |
+
+> 工作目录已从 `D:\OneDrive\Documents\1Jason\AI答不锂` 迁到 `D:\Projects\energy-daily`，旧路径不再使用。
+> **存放明文密钥的文件未迁移**（`SecretKey-腾讯COS.csv`、`*密钥*.txt` 等），建议直接删除或转入密码管理器。
 
 ---
 
