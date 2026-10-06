@@ -22,7 +22,7 @@
  * 再跑一次 scripts/publish.py, feed 里的封面/音频链接会自动切到新地址。
  */
 
-const ORIGIN = "https://aili-1500638180.cos.ap-shanghai.myqcloud.com";
+const ORIGIN = "https://aili-1500638180.cos-website.ap-shanghai.myqcloud.com";
 
 /** 需要摘除的响应头(小写) */
 const STRIP = ["content-disposition", "x-cos-force-download", "x-cos-request-id"];
@@ -31,15 +31,9 @@ export default {
   async fetch(request) {
     const url = new URL(request.url);
 
-    // 只代理 energy-daily/ 前缀下的资源, 其余给个明确提示
-    if (!url.pathname.startsWith("/energy-daily/")) {
-      return new Response(
-        "AI答不锂 · 边缘代理\n\n请访问 /energy-daily/podcast.xml 获取播客订阅源。\n",
-        { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } }
-      );
-    }
-
     // 原样转发(包含 Range 头, 保证音频可拖动播放/流式下载; Apple 要求 byte-range)
+    // 源站用「静态网站端点」而非默认域名: 默认域名 / 返回桶列表 XML, 静态网站端点 / 才返回 index.html(官网主页);
+    // 其余路径(/energy-daily/* 音频封面、/logo.jpg 等)一并代理, 统一摘除强制下载头。
     const upstream = await fetch(new Request(ORIGIN + url.pathname + url.search, request));
 
     const headers = new Headers(upstream.headers);

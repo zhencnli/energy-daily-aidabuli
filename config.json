@@ -12,11 +12,11 @@
     "subcategory": "Investing",
     "explicit": "false",
     "owner_name": "老锂",
-    "website": "https://aidabuli.workers.dev/",
+    "website": "https://aili-1500638180.cos-website.ap-shanghai.myqcloud.com/",
     "copyright": "老锂 · AI答不锂"
   },
   "cos": {
-    "public_base": "https://aidabuli.workers.dev",
+    "public_base": "",
     "prefix_audio": "energy-daily/audio",
     "prefix_meta": "energy-daily/meta",
     "key_rss": "energy-daily/podcast.xml",

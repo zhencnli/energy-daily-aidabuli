@@ -2,7 +2,7 @@
 
 > 生成时间：2026-10-05 21:15 · feed 校验状态：**通过**（W3C Feed Validator：Congratulations! This is a valid RSS feed.）
 >
-> **2026-10-06 更新**：已部署 Cloudflare Worker 边缘代理（`https://aidabuli.workers.dev`），COS 强制下载头已摘除（实测 RSS/封面/音频 GET 均不再带 `content-disposition`）。`config.cos.public_base` 已切到该代理并重发 RSS，feed 内封面/音频/feed 三个链接整体改写。**下方「零、先复制这三段」的 RSS Feed URL 与节目主页已更新为代理地址**，用代理地址提交 Apple 即可。
+> **2026-10-06 更正（重要）**：上一版称「已部署 Cloudflare Worker 边缘代理」，**经核实该 Worker 并未真正部署成功**（`aidabuli.workers.dev` 实际不可达，返回 502），且当时错误地把 `config.cos.public_base` 指向了这个死地址，导致 feed 内链接一度失效。**现已回滚**：`public_base` 恢复为空，feed 全部链接改回腾讯云 COS 直连（音频/封面用默认域名、主页用静态网站端点），线上已验证所有 URL 200 可达。**当前请用下方 COS 直连地址提交 Apple**。Cloudflare Worker 边缘代理仍是可选优化（见「调整④」），需你在 Cloudflare 真正部署后再切换，未部署前切勿把 feed 指向 workers.dev。
 
 ---
 
@@ -10,7 +10,7 @@
 
 **RSS Feed URL（唯一，直接复制）**
 ```
-https://aidabuli.workers.dev/energy-daily/podcast.xml
+https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/podcast.xml
 ```
 
 **联系邮箱（Apple 联系你用）**
@@ -20,7 +20,7 @@ aidabuli@agent.qq.com
 
 **节目主页（Apple 会校验）**
 ```
-https://aidabuli.workers.dev/
+https://aili-1500638180.cos-website.ap-shanghai.myqcloud.com/
 ```
 
 ---
