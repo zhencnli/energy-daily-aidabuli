@@ -5,7 +5,7 @@ GitHub Actions 负责计算，腾讯云 COS 负责托管，Git 仓库负责状�
 
 **RSS（填给小宇宙 / Apple Podcasts 一次即可）**
 ```
-https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/podcast.xml
+https://aidabuli.workers.dev/energy-daily/podcast.xml
 ```
 
 ---

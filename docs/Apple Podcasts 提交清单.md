@@ -1,6 +1,8 @@
 # Apple Podcasts 提交清单｜AI答不锂
 
 > 生成时间：2026-10-05 21:15 · feed 校验状态：**通过**（W3C Feed Validator：Congratulations! This is a valid RSS feed.）
+>
+> **2026-10-06 更新**：已部署 Cloudflare Worker 边缘代理（`https://aidabuli.workers.dev`），COS 强制下载头已摘除（实测 RSS/封面/音频 GET 均不再带 `content-disposition`）。`config.cos.public_base` 已切到该代理并重发 RSS，feed 内封面/音频/feed 三个链接整体改写。**下方「零、先复制这三段」的 RSS Feed URL 与节目主页已更新为代理地址**，用代理地址提交 Apple 即可。
 
 ---
 
@@ -8,7 +10,7 @@
 
 **RSS Feed URL（唯一，直接复制）**
 ```
-https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/podcast.xml
+https://aidabuli.workers.dev/energy-daily/podcast.xml
 ```
 
 **联系邮箱（Apple 联系你用）**
@@ -18,7 +20,7 @@ aidabuli@agent.qq.com
 
 **节目主页（Apple 会校验）**
 ```
-https://aili-1500638180.cos-website.ap-shanghai.myqcloud.com/
+https://aidabuli.workers.dev/
 ```
 
 ---
