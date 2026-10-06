@@ -211,6 +211,25 @@ def call_llm(messages, max_tokens=None, retries=3, json_mode=True):
     sys.exit(f"LLM 调用最终失败: {last}")
 
 
+def parse_json_output(stdout):
+    """上游脚本可能输出美化后的多行 JSON，不能只取最后一行（那会是 `}`）。"""
+    text = (stdout or "").strip()
+    if not text:
+        return None
+    try:
+        return json.loads(text)
+    except Exception:
+        pass
+    lines = [l for l in text.splitlines() if l.strip()]
+    for i in range(len(lines) - 1, -1, -1):
+        chunk = "\n".join(lines[i:])
+        try:
+            return json.loads(chunk)
+        except Exception:
+            continue
+    return None
+
+
 def extract_json(text, finish_reason=""):
     text = (text or "").strip()
     m = re.search(r"```(?:json)?\s*(\{.*\})\s*```", text, re.S)
@@ -349,7 +368,7 @@ def main():
     proc = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", cwd=str(ROOT))
     if proc.returncode != 0:
         sys.exit(f"TTS 失败: {(proc.stderr or '')[:500]}")
-    tts_out = json.loads(proc.stdout.strip().splitlines()[-1])
+    tts_out = parse_json_output(proc.stdout) or {}
     duration = tts_out.get("duration_sec", 0)
     log(f"合成完成: {tts_out.get('duration_hms')} / {tts_out.get('chars_per_min')} 字每分钟")
 
@@ -365,10 +384,9 @@ def main():
     )
     if pub.returncode != 0:
         sys.exit(f"发布失败: {(pub.stderr or '')[:800]}")
-    try:
-        result = json.loads(pub.stdout.strip().splitlines()[-1])
-    except Exception:
-        sys.exit(f"发布输出解析失败: {pub.stdout[:400]}")
+    result = parse_json_output(pub.stdout)
+    if result is None:
+        sys.exit(f"发布输出解析失败: {(pub.stdout or '')[:400]}")
 
     log("=" * 60)
     log(f"✅ 发布成功  {date}")

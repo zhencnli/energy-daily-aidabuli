@@ -216,7 +216,11 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
-    env = load_env()
+    # 必须把 os.environ 也带上：云端没有 .env，只有环境变量。
+    # 只用 load_env() 会让 cos_origin() 拿到空桶名 → public_base 回退到 example.com，
+    # 把错误域名写进线上 RSS 的封面与 feed 自引用链接。
+    env = dict(os.environ)
+    env.update(load_env())
     c = cfg["cos"]
     base_name = cfg["naming"]["audio_basename"].format(date=args.date)
     key_mp3 = f"{c['prefix_audio']}/{base_name}.mp3"
