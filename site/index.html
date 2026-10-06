@@ -76,6 +76,24 @@
   .qrbox img { width: 104px; height: 104px; border-radius: 8px; flex: none; background: #fff; }
   .qrbox .qt { font-size: 14px; color: #3d434d; line-height: 1.6; }
   .qrbox .qt b { display: block; font-size: 15px; color: #1c1e21; margin-bottom: 3px; }
+  .feedbox {
+    border: 1px dashed #1a6fd4; border-radius: 12px; padding: 16px 18px; margin: 0 0 28px;
+    text-align: left; background: #f7faff;
+  }
+  .feedbox .fb-title { font-size: 15px; font-weight: 600; color: #1c1e21; margin-bottom: 4px; }
+  .feedbox .fb-sub { font-size: 13px; color: #6b7280; margin-bottom: 12px; line-height: 1.6; }
+  .feedbox .fb-row { display: flex; align-items: stretch; gap: 8px; }
+  .feedbox .fb-url {
+    flex: 1; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px; color: #1c1e21; background: #ffffff; border: 1px solid #e6e8eb;
+    border-radius: 8px; padding: 10px 12px; word-break: break-all; display: flex; align-items: center;
+  }
+  .feedbox .fb-copy {
+    flex: none; border: none; background: #1a6fd4; color: #ffffff; font-size: 13px; font-weight: 600;
+    border-radius: 8px; padding: 0 16px; cursor: pointer; transition: background .15s;
+  }
+  .feedbox .fb-copy:hover { background: #155bb0; }
+  .feedbox .fb-note { font-size: 12px; color: #8b9099; margin-top: 10px; line-height: 1.6; }
   footer { margin-top: 28px; font-size: 13px; color: #8b9099; }
   @media (max-width: 520px) {
     .wrap { padding: 32px 16px 48px; }
@@ -132,8 +150,32 @@
         <img src="https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/xiaoyuzhou-qr.jpg" alt="小宇宙 · AI答不锂 节目名片二维码">
         <div class="qt"><b>小宇宙 · 扫码收听</b>用微信或小宇宙 App 扫一扫，直达「AI答不锂」节目名片</div>
       </a>
+
+      <div class="feedbox">
+        <div class="fb-title">用任意泛用型播客 App 订阅</div>
+        <div class="fb-sub">AntennaPod · Pocket Casts · Overcast · Castro 等：复制下方 RSS 地址，在 App 的「添加订阅 / 通过链接订阅」中粘贴即可收听。</div>
+        <div class="fb-row">
+          <div class="fb-url" id="rssurl">https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/podcast.xml</div>
+          <button class="fb-copy" type="button" onclick="copyRss(this)">复制</button>
+        </div>
+        <div class="fb-note">国内听众提示：Apple Podcasts 中国区仍在审核中，泛用型客户端直贴 RSS 是目前最稳定可用的订阅方式；小宇宙也可在 App 内搜索「AI答不锂」订阅。</div>
+      </div>
     </div>
     <footer>© 2026 AI答不锂　|　仅代表个人观点，不构成投资参考</footer>
   </div>
+  <script>
+    function copyRss(btn) {
+      var t = document.getElementById('rssurl').innerText.trim();
+      function ok() { var o = btn.textContent; btn.textContent = '已复制'; setTimeout(function () { btn.textContent = o; }, 1500); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(t).then(ok).catch(fallback);
+      } else { fallback(); }
+      function fallback() {
+        var r = document.createRange(); r.selectNode(document.getElementById('rssurl'));
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        try { document.execCommand('copy'); ok(); } catch (e) {}
+      }
+    }
+  </script>
 </body>
 </html>
