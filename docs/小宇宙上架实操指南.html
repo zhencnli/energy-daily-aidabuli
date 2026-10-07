@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小宇宙上架实操指南 · AI答不锂</title>
+<style>
+  :root { --blue:#185FA5; --green:#3B6D11; --red:#A32D2D; --amber:#854F0B; --ink:#1f2329; --muted:#5F5E5A; --line:#d9d9d9; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; color:var(--ink); background:#fafafa; line-height:1.7; }
+  header { background:linear-gradient(135deg,#185FA5,#0C447C); color:#fff; padding:28px 24px; }
+  header h1 { margin:0 0 6px; font-size:22px; font-weight:600; }
+  header p { margin:0; opacity:.9; font-size:14px; }
+  main { max-width:880px; margin:0 auto; padding:24px 18px 60px; }
+  section { background:#fff; border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin:18px 0; }
+  h2 { font-size:18px; margin:0 0 12px; padding-left:10px; border-left:4px solid var(--blue); }
+  h3 { font-size:15px; margin:18px 0 8px; }
+  p, li { font-size:14px; color:#333; }
+  .warn { background:#fff6f6; border:1px solid #f3c9c9; color:#7a1f1f; border-radius:10px; padding:12px 14px; font-size:13px; }
+  .note { background:#f3f8ff; border:1px solid #cfe0f5; border-radius:10px; padding:12px 14px; font-size:13px; }
+  .steps { counter-reset:s; padding:0; margin:0; list-style:none; }
+  .steps li { position:relative; padding:10px 0 10px 36px; border-bottom:1px dashed var(--line); }
+  .steps li:last-child { border-bottom:none; }
+  .steps li::before { counter-increment:s; content:counter(s); position:absolute; left:0; top:10px; width:24px; height:24px; background:var(--blue); color:#fff; border-radius:50%; text-align:center; line-height:24px; font-size:13px; font-weight:600; }
+  .mock-row { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin:14px 0; }
+  .mock { width:200px; }
+  .mock figcaption { font-size:12px; color:var(--muted); text-align:center; margin-top:6px; }
+  .two { display:flex; gap:18px; flex-wrap:wrap; }
+  .two > div { flex:1; min-width:260px; }
+  code { background:#f0f0f0; padding:1px 6px; border-radius:4px; font-size:13px; }
+  .pill { display:inline-block; padding:2px 10px; border-radius:999px; font-size:12px; font-weight:600; }
+  .pill.g { background:#eaf3de; color:#27500A; }
+  .pill.r { background:#fcebeb; color:#791f1f; }
+  .pill.a { background:#faeeda; color:#633806; }
+</style>
+</head>
+<body>
+<header>
+  <h1>小宇宙上架实操指南</h1>
+  <p>AI答不锂 / Energy Daily · 2026-10-06 修订（基于实测 + 官方 FAQ）</p>
+</header>
+<main>
+
+<section>
+  <h2>先说结论：为什么"贴 RSS 进搜索框"搜不到</h2>
+  <p>小宇宙是<strong>泛用型播客客户端</strong>——听众端能用 RSS 订阅<strong>已经在它节目库里</strong>的节目。但<strong>创作者不能靠粘贴外部 RSS 让一个新节目自动上架、被搜索</strong>。</p>
+  <p>官方 FAQ 原文：「如果你知道对应节目的 RSS 地址，也可以直接把地址复制到搜索栏搜索，<u>即可将此节目提交到节目库</u>」。注意关键词是<strong>"提交到节目库"</strong>——它是一次<strong>收录请求</strong>，进入编辑审核队列，<strong>非即时、非保证</strong>。一个新节目粘贴后立刻搜不到，正是这个机制：请求还在排队，甚至可能因内容/来源被拒。</p>
+  <div class="warn">★ 已实证：把 <code>https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/podcast.xml</code> 粘贴进小宇宙搜索框，<strong>搜不到、不被收录</strong>。所以"贴 RSS = 零成本分发"这条路在当前不成立。</div>
+</section>
+
+<section>
+  <h2>到小宇宙的三条路线</h2>
+  <div class="two">
+    <div>
+      <h3><span class="pill r">路线①</span> 听众贴 RSS（请求收录）</h3>
+      <p>搜索框粘贴 feed → 提交编辑审核 → 入库后听众才能搜到。<strong>非即时、非保证</strong>，且实测新节目搜不到。<em>不推荐作为主路径。</em></p>
+    </div>
+    <div>
+      <h3><span class="pill g">路线②</span> 创作者逐期上传音频</h3>
+      <p><strong>真正能让节目被公众搜索订阅的路径</strong>：注册创作者账号 → 创作中心建节目 → 每期上传 MP3 → 审核 → 上架。<br><strong>代价：音频需维护两份</strong>（COS 一份 + 小宇宙一份），破坏单一来源。</p>
+    </div>
+  </div>
+  <div style="margin-top:10px">
+    <h3><span class="pill a">路线③</span> 坐等小宇宙从 Apple 目录抓取</h3>
+    <p>小宇宙节目库很大程度<strong>从 Apple Podcasts 目录抓取</strong>。你的节目已在 Apple <code>us</code> 区上架、<code>cn</code> 审核中——<strong>有可能被小宇宙自动收录</strong>。免费、零额外维护，但<strong>不可控、时间不定</strong>。</p>
+  </div>
+  <div class="note">取舍：想在小宇宙有强存在感 → 走<strong>路线②</strong>逐期上传（权衡单一来源）；否则以 <strong>Apple(等cn) + 泛用型客户端（AntennaPod 等直贴 RSS）</strong> 为主，小宇宙靠<strong>路线③</strong>被动收录。</div>
+</section>
+
+<section>
+  <h2>路线② 实操步骤（图文）</h2>
+  <p>每期都要手动上传一份音频到小宇宙。下面按 App 界面逐步演示。</p>
+
+  <h3>步骤 1 · 登录创作者账号</h3>
+  <p>打开<strong>小宇宙 App</strong> → 右下角<strong>「我的」</strong> → 进入<strong>「创作中心」</strong>。或用网页端主播后台 <code>https://podcaster.xiaoyuzhoufm.com/</code> 登录（网页端上传更方便）。你已有的名片 <code>namecard.xiaoyuzhoufm.com/bcjvl</code> 就是该账号的个人页。</p>
+  <div class="mock-row">
+    <figure class="mock">
+      <svg viewBox="0 0 200 360" width="200" height="360" role="img" aria-label="我的页面">
+        <rect x="2" y="2" width="196" height="356" rx="22" fill="#fff" stroke="#ccc"/>
+        <rect x="2" y="2" width="196" height="44" rx="22" fill="#185FA5"/>
+        <text x="100" y="28" text-anchor="middle" fill="#fff" font-size="13">我的</text>
+        <circle cx="100" cy="96" r="30" fill="#e6f1fb" stroke="#185FA5"/>
+        <text x="100" y="101" text-anchor="middle" font-size="12" fill="#185FA5">头像</text>
+        <text x="100" y="142" text-anchor="middle" font-size="13" fill="#333">老锂 / aidabuli</text>
+        <rect x="20" y="176" width="160" height="40" rx="10" fill="#eaf3de" stroke="#3B6D11"/>
+        <text x="100" y="201" text-anchor="middle" font-size="13" fill="#27500A" font-weight="600">创作中心</text>
+        <rect x="20" y="226" width="160" height="34" rx="8" fill="#f3f3f3"/>
+        <text x="32" y="248" font-size="12" fill="#666">我的播客</text>
+        <rect x="20" y="268" width="160" height="34" rx="8" fill="#f3f3f3"/>
+        <text x="32" y="290" font-size="12" fill="#666">订阅 / 收藏</text>
+        <rect x="20" y="310" width="160" height="34" rx="8" fill="#f3f3f3"/>
+        <text x="32" y="332" font-size="12" fill="#666">设置</text>
+      </svg>
+      <figcaption>① 我的 → 创作中心</figcaption>
+    </figure>
+  </div>
+
+  <h3>步骤 2 · 创建节目（仅首次）</h3>
+  <p>在创作中心点<strong>「创建播客」</strong> → 填写：节目名 <code>AI答不锂</code>、简介（可用官网同款文案）、上传节目封面（复用 <code>site/logo.jpg</code>）→ 点创建。创建后进入你的节目主页。</p>
+  <div class="mock-row">
+    <figure class="mock">
+      <svg viewBox="0 0 200 360" width="200" height="360" role="img" aria-label="创建播客">
+        <rect x="2" y="2" width="196" height="356" rx="22" fill="#fff" stroke="#ccc"/>
+        <rect x="2" y="2" width="196" height="40" rx="22" fill="#185FA5"/>
+        <text x="100" y="26" text-anchor="middle" fill="#fff" font-size="13">创作中心</text>
+        <rect x="20" y="60" width="60" height="60" rx="10" fill="#eaf3de" stroke="#3B6D11"/>
+        <text x="50" y="96" text-anchor="middle" font-size="11" fill="#3B6D11">封面</text>
+        <rect x="92" y="64" width="88" height="14" rx="4" fill="#eee"/>
+        <rect x="92" y="84" width="120" height="14" rx="4" fill="#eee"/>
+        <rect x="92" y="104" width="60" height="14" rx="4" fill="#eee"/>
+        <text x="20" y="150" font-size="11" fill="#666">节目名</text>
+        <rect x="20" y="158" width="160" height="26" rx="6" fill="#f3f3f3" stroke="#ddd"/>
+        <text x="28" y="176" font-size="12" fill="#333">AI答不锂</text>
+        <text x="20" y="206" font-size="11" fill="#666">简介</text>
+        <rect x="20" y="214" width="160" height="52" rx="6" fill="#f3f3f3" stroke="#ddd"/>
+        <text x="28" y="234" font-size="11" fill="#999">新能源十年从业者…</text>
+        <rect x="50" y="290" width="100" height="36" rx="18" fill="#3B6D11"/>
+        <text x="100" y="313" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">创建播客</text>
+      </svg>
+      <figcaption>② 填名称/简介/封面 → 创建</figcaption>
+    </figure>
+  </div>
+
+  <h3>步骤 3 · 上传单集音频</h3>
+  <p>进入节目主页 → 点右上角<strong>「+」</strong> → 选<strong>「上传音频」</strong> → 从手机/电脑选择当期的 MP3（可从 COS 下载，或用本地 <code>audio/energydaily-YYYY-MM-DD.mp3</code>）→ 填写<strong>单集标题</strong>（如 <code>Energy Daily · 2026年10月6日｜今日新能源头条</code>）和简介 → 点发布。</p>
+  <div class="mock-row">
+    <figure class="mock">
+      <svg viewBox="0 0 200 360" width="200" height="360" role="img" aria-label="上传音频">
+        <rect x="2" y="2" width="196" height="356" rx="22" fill="#fff" stroke="#ccc"/>
+        <rect x="2" y="2" width="196" height="40" rx="22" fill="#185FA5"/>
+        <text x="100" y="26" text-anchor="middle" fill="#fff" font-size="13">AI答不锂</text>
+        <text x="20" y="74" font-size="12" fill="#666">单集标题</text>
+        <rect x="20" y="82" width="160" height="26" rx="6" fill="#f3f3f3" stroke="#ddd"/>
+        <text x="28" y="100" font-size="11" fill="#333">Energy Daily · 10月6日…</text>
+        <rect x="20" y="124" width="160" height="60" rx="8" fill="#eaf3de" stroke="#3B6D11" stroke-dasharray="4"/>
+        <text x="100" y="150" text-anchor="middle" font-size="11" fill="#3B6D11">＋ 选择 MP3 文件</text>
+        <text x="100" y="168" text-anchor="middle" font-size="10" fill="#888">energydaily-2026-10-06.mp3</text>
+        <text x="20" y="204" font-size="12" fill="#666">简介 / shownotes</text>
+        <rect x="20" y="212" width="160" height="60" rx="6" fill="#f3f3f3" stroke="#ddd"/>
+        <rect x="50" y="296" width="100" height="36" rx="18" fill="#3B6D11"/>
+        <text x="100" y="319" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">发布</text>
+      </svg>
+      <figcaption>③ 选音频 → 填标题 → 发布</figcaption>
+    </figure>
+  </div>
+
+  <h3>步骤 4 · 审核与上架</h3>
+  <p>点发布后进入<strong>平台审核</strong>（通常几分钟～几小时，内容合规即过）。审核通过后单集<strong>公开可搜索、可订阅</strong>。之后每期重复步骤 3。</p>
+  <div class="mock-row">
+    <figure class="mock">
+      <svg viewBox="0 0 200 360" width="200" height="360" role="img" aria-label="审核中">
+        <rect x="2" y="2" width="196" height="356" rx="22" fill="#fff" stroke="#ccc"/>
+        <rect x="2" y="2" width="196" height="40" rx="22" fill="#185FA5"/>
+        <text x="100" y="26" text-anchor="middle" fill="#fff" font-size="13">发布状态</text>
+        <circle cx="100" cy="120" r="26" fill="none" stroke="#854F0B" stroke-width="4" stroke-dasharray="10 6"/>
+        <text x="100" y="126" text-anchor="middle" font-size="12" fill="#854F0B">审核中</text>
+        <rect x="20" y="180" width="160" height="40" rx="8" fill="#f3f3f3"/>
+        <text x="30" y="205" font-size="12" fill="#666">✓ 音频已上传</text>
+        <rect x="20" y="228" width="160" height="40" rx="8" fill="#f3f3f3"/>
+        <text x="30" y="253" font-size="12" fill="#666">⏳ 等平台审核</text>
+        <rect x="20" y="300" width="160" height="34" rx="8" fill="#e6f1fb"/>
+        <text x="100" y="322" text-anchor="middle" font-size="12" fill="#185FA5">通过后自动上架</text>
+      </svg>
+      <figcaption>④ 审核通过 → 上架</figcaption>
+    </figure>
+  </div>
+
+  <div class="warn">⚠ 关键代价：路线② 下，每期音频要<strong>存两份</strong>（COS 供官网/Apple/RSS 客户端 + 小宇宙上传）。GitHub Actions 不会自动传小宇宙，需你手动操作，或后续考虑用脚本/第三方工具桥接。</div>
+</section>
+
+<section>
+  <h2>给你的建议（结合现有架构）</h2>
+  <ol class="steps">
+    <li><strong>短期（零额外维护）</strong>：维持现状——Apple 已上架（等 cn）、官网引导听众用 AntennaPod 等泛用型客户端直贴 RSS 订阅；小宇宙先靠路线③被动收录，定期搜一下看是否出现。</li>
+    <li><strong>中期（要小宇宙强存在感）</strong>：走路线②，每期手动上传音频到小宇宙。可把"下载当期 MP3 + 上传"做成一份固定 SOP，成本可控。</li>
+    <li><strong>加固（可选）</strong>：部署 Cloudflare Worker 摘除 COS 强制下载头，让官网主页能渲染、RSS 跨客户端播放更稳——对小宇宙路线③被动抓取也有利。</li>
+    <li><strong>不要做</strong>：为"分发"去喜马拉雅/网易云等逐期上传（破坏单一来源、维护成本更高）；也不要再把"贴 RSS 进搜索框"当作上架手段。</li>
+  </ol>
+</section>
+
+</main>
+</body>
+</html>
