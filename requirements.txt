@@ -5,4 +5,5 @@ edge-tts>=6.1.9        # 文本转语音（微软神经语音），本项目音�
 soundfile>=0.12.1      # 读取 mp3 / 写出 wav，并计算时长
 mutagen>=1.48          # 把封面写入 MP3(ID3 APIC) 与 WAV(id3 chunk)
 requests>=2.31         # 调 LLM / 搜索 API / 幂等检查
-Pillow>=10.0           # 可选：仅在需要重新生成封面时用到
+numpy>=1.26            # TTS 多说话人 PCM 拼接
+Pillow>=10.0           # 制作台封面预览

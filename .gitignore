@@ -14,6 +14,8 @@ venv/
 
 # 音频产物：COS 是唯一真相源，仓库不存大文件
 audio/
+studio_output/
+data/podcast.xml
 *.wav
 *.mp3
 !assets/cover.jpg

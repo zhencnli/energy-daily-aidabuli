@@ -23,15 +23,53 @@
     "key_cover": "energy-daily/cover.jpg",
     "public_read": true
   },
+  "columns": {
+    "brief": {
+      "label": "Energy Daily · 每日简报",
+      "title_prefix": "Energy Daily · ",
+      "itunes_category": "Business",
+      "itunes_subcategory": "Investing"
+    },
+    "insight": {
+      "label": "Energy +AI · 深度洞察",
+      "title_prefix": "Energy +AI · ",
+      "itunes_category": "Technology",
+      "itunes_subcategory": "Tech News"
+    }
+  },
   "tts": {
-    "voice": "zh-CN-XiaoxiaoNeural",
-    "voice_alt": "zh-CN-XiaoyiNeural",
-    "rate": "-6%",
-    "pitch": "+0Hz",
-    "volume": "+0%",
+    "provider": "aliyun",
     "target_chars_per_min": 260,
-    "target_min_sec": 300,
-    "target_max_sec": 480
+    "target_min_sec": 1200,
+    "target_max_sec": 2400,
+    "edge": {
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "voice_alt": "zh-CN-XiaoyiNeural",
+      "voice_male": "zh-CN-YunxiNeural",
+      "voice_female": "zh-CN-XiaoxiaoNeural",
+      "rate": "-6%",
+      "pitch": "+0Hz",
+      "volume": "+0%"
+    },
+    "aliyun": {
+      "api_key_env": "DASHSCOPE_API_KEY",
+      "endpoint": "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+      "model": "cosyvoice-v1",
+      "voice_male": "longhua",
+      "voice_female": "longxiaochun",
+      "format": "mp3",
+      "rate": 1.0
+    },
+    "speakers": {
+      "laoli": { "role": "male", "label": "老锂（男声）" },
+      "xiaoai": { "role": "female", "label": "小爱（女声）" }
+    }
+  },
+  "studio": {
+    "output_dir": "studio_output",
+    "default_column": "insight",
+    "default_mode": "dialogue",
+    "cover": "assets/cover.jpg"
   },
   "naming": {
     "audio_basename": "energydaily-{date}",
