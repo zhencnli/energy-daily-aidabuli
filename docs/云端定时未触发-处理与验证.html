@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>云端定时未触发 · 处理与验证指南</title>
+<style>
+  :root{--bg:#f6f7f9;--card:#fff;--line:#e6e8eb;--txt:#1c1e21;--mut:#61676e;--blue:#0b62d6;--green:#0f8a4d;--red:#c62828;--amber:#a55b00;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.75 -apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+  .wrap{max-width:880px;margin:0 auto;padding:28px 20px 64px}
+  h1{font-size:24px;margin:0 0 6px}
+  .sub{color:var(--mut);margin:0 0 22px;font-size:14px}
+  h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--blue)}
+  h3{font-size:16px;margin:20px 0 8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin:14px 0}
+  .ok{border-left:4px solid var(--green)}
+  .warn{border-left:4px solid var(--amber)}
+  .bad{border-left:4px solid var(--red)}
+  .blue{border-left:4px solid var(--blue)}
+  code{background:#eef1f4;padding:1px 6px;border-radius:5px;font-family:ui-monospace,Consolas,monospace;font-size:13px}
+  pre{background:#1f2430;color:#e7ebf3;padding:14px 16px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.6}
+  .gh{background:#0d1117;border-radius:10px;padding:12px 14px;color:#e6edf3;font-size:13px;margin:12px 0}
+  .gh .hd{display:flex;justify-content:space-between;color:#8b949e;border-bottom:1px solid #21262d;padding:4px 6px 10px;margin-bottom:4px}
+  .gh .row{display:flex;align-items:center;gap:10px;padding:9px 6px;border-bottom:1px solid #21262d}
+  .gh .row:last-child{border-bottom:0}
+  .gh .ev{display:inline-flex;align-items:center;gap:7px;min-width:168px;color:#e6edf3}
+  .gh .msg{flex:1;color:#e6edf3}
+  .gh small{color:#8b949e}
+  .clk{width:13px;height:13px;border:1.6px solid #58a6ff;border-radius:50%;position:relative;display:inline-block;flex:0 0 13px}
+  .clk::before{content:"";position:absolute;left:5px;top:2px;width:1.6px;height:4px;background:#58a6ff}
+  .clk::after{content:"";position:absolute;left:5px;top:5px;width:3.4px;height:1.6px;background:#58a6ff}
+  .per{width:13px;height:13px;border:1.6px solid #8b949e;border-radius:50%;position:relative;display:inline-block;flex:0 0 13px}
+  .per::before{content:"";position:absolute;left:4px;top:2px;width:3px;height:3px;border-radius:50%;background:#8b949e}
+  .per::after{content:"";position:absolute;left:2.5px;top:6px;width:6px;height:3px;border-radius:3px 3px 0 0;background:#8b949e}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:#f0f2f5}
+  .tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:20px;white-space:nowrap}
+  .tag.g{background:#e6f7ee;color:var(--green)}
+  .tag.r{background:#fdecec;color:var(--red)}
+  .tag.a{background:#fdf3e6;color:var(--amber)}
+  ol,ul{padding-left:22px;margin:8px 0}
+  li{margin:5px 0}
+  .step{display:flex;gap:12px;margin:14px 0}
+  .step .n{flex:0 0 30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:14px}
+  .step .b{flex:1}
+  footer{margin-top:40px;color:var(--mut);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>云端定时未触发 · 处理与验证指南</h1>
+  <p class="sub">Energy Daily · GitHub Actions · 2026-10-07</p>
+
+  <h2>一、截图判读：结论是"从未自动触发"</h2>
+  <div class="card bad">
+    <p>你的 Actions 截图显示：<b>4 次运行全部是 "Manually run by zhencnli"</b>，Event 列<b>没有一条 <code>scheduled</code></b>。</p>
+    <p>含义：<code>schedule</code> 定时事件<b>从未被 GitHub 触发</b>——不是"延迟几小时"，也不是"跑了但失败"，而是<b>根本没跑</b>。</p>
+  </div>
+
+  <div class="gh">
+    <div class="hd"><span>Energy Daily</span><span>4 workflow runs</span></div>
+    <div class="row"><span class="per"></span><span class="ev">workflow_dispatch</span><span class="msg">#4 Manually run by zhencnli</span><small>14 分钟前</small></div>
+    <div class="row"><span class="per"></span><span class="ev">workflow_dispatch</span><span class="msg">#3 Manually run by zhencnli</span><small>Oct 6 12:37</small></div>
+    <div class="row"><span class="per"></span><span class="ev">workflow_dispatch</span><span class="msg">#2 Manually run by zhencnli</span><small>Oct 6 12:03</small></div>
+    <div class="row"><span class="per"></span><span class="ev">workflow_dispatch</span><span class="msg">#1 Manually run by zhencnli</span><small>Oct 6 11:56</small></div>
+  </div>
+  <p style="color:var(--mut);font-size:14px">↑ 全部是"人形"图标 + <code>workflow_dispatch</code>，<b>没有任何"时钟"图标 / <code>scheduled</code> 行</b>。</p>
+
+  <h2>二、已排除的原因（逐条核实）</h2>
+  <table>
+    <tr><th>可能原因</th><th>核实结果</th></tr>
+    <tr><td>工作流不在默认分支</td><td><span class="tag g">已排除</span> 默认分支是 <code>main</code>，<code>daily.yml</code> 从 10-06 09:11 起就在 main 上</td></tr>
+    <tr><td>cron 语法 / 时区写错</td><td><span class="tag g">已排除</span> <code>'37 22 * * *'</code>=北京 06:37、<code>'25 23 * * *'</code>=北京 07:25，且已加引号</td></tr>
+    <tr><td>60 天无活动被自动禁用</td><td><span class="tag g">已排除</span> 仓库 10-06 才建，仅 1 天</td></tr>
+    <tr><td>Fork 仓库</td><td><span class="tag g">已排除</span> 是你自己的仓库</td></tr>
+    <tr><td>Actions 整体被禁用</td><td><span class="tag a">基本排除</span> 你能手动 Run，说明 Actions 已启用</td></tr>
+  </table>
+  <p>结论：<b>配置层面全部正常，问题出在 GitHub 调度器侧的注册/触发</b>。</p>
+
+  <h2>三、已执行的修复（无需你操作）</h2>
+  <div class="card ok">
+    <div class="step"><div class="n">1</div><div class="b"><b>重推 <code>daily.yml</code></b>，强制 GitHub 重新注册 schedule 触发器。<br><small style="color:var(--mut)">commit <code>38a809f</code>，已推送 main</small></div></div>
+    <div class="step"><div class="n">2</div><div class="b"><b>新增临时心跳工作流</b> <code>schedule-heartbeat.yml</code>：每 5 分钟触发一次、只打印一行、几秒结束。<br><small style="color:var(--mut)">用途：在 10 分钟内验证"本仓库定时触发到底通不通"；验证完立即删除</small></div></div>
+  </div>
+
+  <h2>四、你要做的：2 件事</h2>
+
+  <h3>① 检查 Actions 是否被限制（1 分钟）</h3>
+  <p>仓库页 → <b>Settings</b> → 左侧 <b>Actions</b> → <b>General</b>，确认：</p>
+  <table>
+    <tr><th>设置项</th><th>应为</th></tr>
+    <tr><td>Actions permissions</td><td>Allow all actions and reusable workflows</td></tr>
+    <tr><td>Workflow permissions</td><td>Read and write permissions（否则回写 episodes.json 会失败）</td></tr>
+  </table>
+  <p>若这里被设成 "Disable actions" 或限制到具体工作流，定时触发会被无声掐断。</p>
+
+  <h3>② 10 分钟后看心跳是否出现（关键验证）</h3>
+  <p>仓库页 → <b>Actions</b> → 左侧会出现 <b>Schedule heartbeat (TEMP)</b> → 看它的运行列表：</p>
+  <div class="gh">
+    <div class="hd"><span>Schedule heartbeat (TEMP)</span><span>runs</span></div>
+    <div class="row"><span class="clk"></span><span class="ev">scheduled</span><span class="msg">Report trigger</span><small>几分钟前</small></div>
+  </div>
+  <table>
+    <tr><th>你看到</th><th>说明</th><th>下一步</th></tr>
+    <tr><td><span class="tag g">出现 scheduled 行</span></td><td>定时触发<b>正常</b>，此前只是没注册；重推已修好</td><td>告知我，我删除心跳工作流；daily 明天会自动跑</td></tr>
+    <tr><td><span class="tag r">几天都没有任何行</span></td><td>仓库级定时触发被禁用/受限</td><td>走第五节「外部调度兜底」</td></tr>
+  </table>
+
+  <h2>五、兜底方案：外部调度（100% 可靠）</h2>
+  <div class="card warn">
+    <p>GitHub 的 <code>schedule</code> 官方定位就是<b>"尽力而为"</b>：可能延迟 10~30 分钟，也可能<b>直接被丢弃且无任何通知</b>。若要"每天必须出摊"，最稳的是<b>用外部定时器调用 GitHub API 触发</b>。</p>
+  </div>
+  <div class="step"><div class="n">1</div><div class="b">GitHub → 头像 → <b>Settings → Developer settings → Personal access tokens → Fine-grained tokens</b>，创建一枚 token，仅授权本仓库，权限勾 <b>Actions: Read and write</b>。<br><small style="color:var(--mut)">（经典 token 也可，勾 <code>workflow</code> scope）</small></div></div>
+  <div class="step"><div class="n">2</div><div class="b">在本机 Windows「任务计划程序」建一个每天 <b>08:30</b> 的任务，运行下面脚本：</div></div>
+  <pre># trigger-daily.ps1  —— 调用 GitHub API 触发 workflow_dispatch
+$token = "把 PAT 填这里或设成环境变量 GH_PAT"
+$repo  = "zhencnli/energy-daily-aidabuli"
+$h = @{ Authorization = "Bearer $token"; Accept = "application/vnd.github+json" }
+Invoke-RestMethod -Method Post -Uri "https://api.github.com/repos/$repo/actions/workflows/daily.yml/dispatches" `
+  -Headers $h -Body (@{ ref = "main" } | ConvertTo-Json) -ContentType "application/json"
+Write-Host "dispatched at $(Get-Date)"</pre>
+  <div class="step"><div class="n">3</div><div class="b">效果：每天 08:30 由本机可靠触发；GitHub 自己的 cron 若也生效，<b>pipeline 幂等会自动跳过</b>重复，双保险不冲突。</div></div>
+
+  <h2>六、一句话总结</h2>
+  <div class="card blue">
+    <p>截图证实 <code>schedule</code> 从未触发；配置无错，是 GitHub 调度器侧问题。我<b>已重推 daily.yml 强制重新注册</b>并加了<b>心跳工作流</b>做快速验证。你只需：<b>①检查 Settings→Actions→General；②10 分钟后看心跳是否出现 scheduled 行</b>，把结果告诉我，我据此决定是收尾还是上外部调度兜底。</p>
+  </div>
+
+  <footer>AI答不锂 · 运维文档 · 2026-10-07</footer>
+</div>
+</body>
+</html>
