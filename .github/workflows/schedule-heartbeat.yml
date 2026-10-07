@@ -1,0 +1,22 @@
+name: Schedule heartbeat (TEMP)
+
+# 临时验证用：确认本仓库的 schedule 定时触发是否真的可用。
+# 每 5 分钟触发一次，仅打印一行，几秒结束。验证完成后立即删除本文件。
+# 若该工作流在 Actions 里出现 "scheduled" 运行，说明定时触发正常；
+# 若几天都不出现任何运行，说明仓库级定时触发被禁用/受限（需检查 Settings → Actions）。
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+jobs:
+  beat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Report trigger
+        run: |
+          echo "Scheduled trigger fired at $(date -u +%FT%TZ) UTC"
+          echo "event_name = ${{ github.event_name }}"
+          echo "actor      = ${{ github.actor }}"

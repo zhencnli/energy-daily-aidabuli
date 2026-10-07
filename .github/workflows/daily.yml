@@ -3,6 +3,7 @@ name: Energy Daily
 # 北京时间 = UTC + 8
 #   主触发 06:37（cron '37 22 * * *'  UTC）   —— 预留 30~45 分钟延迟余量
 #   兜底触发 07:25（cron '25 23 * * *'  UTC） —— pipeline 幂等，当天已生成则自动跳过
+# (2026-10-07) 强制 GitHub 重新注册 schedule 触发器（此前 cron 从未自动触发）
 on:
   schedule:
     - cron: '37 22 * * *'
