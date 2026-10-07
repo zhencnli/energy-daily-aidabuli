@@ -31,5 +31,18 @@
     "duration_hms": "05:35",
     "duration_sec": 335.2,
     "wav_url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-07.wav"
+  },
+  {
+    "date": "2026-10-07",
+    "column": "insight",
+    "title": "储能电芯产品定义 · 2026-10-07",
+    "subtitle": "Energy +AI · 深度洞察",
+    "summary": "规格由系统边界反推，不由话语权决定。宁德和海辰互相独立、各自推导，最后落到同一个 587 上——殊途同归，这是最硬的证据。\n15000次循环是口径通胀，不是技术代差。这个判断比较辣，我后面专门花时间拆它。\n定义权分层，租金随周期流动。什么意思？产业链上谁强势、谁能多拿利润，不是写死的，是跟着供需周期走的——2024年过剩，集成商强势；2026年紧缺，电芯厂回血。两档分裂还有一条明确的裁决线，330次和250次，这两个数字先混个眼熟，后面具体拆解。\n感兴趣的朋友也可以通过客服邮箱，联系我获取PPT材料。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energy-ai-2026-10-07.mp3",
+    "length": 9096078,
+    "duration_hms": "36:30",
+    "duration_sec": 2190.312,
+    "image": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/meta/energy-ai-2026-10-07-cover.png",
+    "wav_url": null
   }
 ]
