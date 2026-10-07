@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>云端定时未触发 · 排查与修复（图文详解）</title>
+<style>
+  :root{ --bg:#f6f8fa; --card:#fff; --line:#d0d7de; --ink:#1f2328; --mut:#656d76; --blue:#0969da; --green:#1a7f37; --amber:#9a6700; --red:#cf222e; }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,"Segoe UI",Helvetica,Arial,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:15px;}
+  .wrap{max-width:860px;margin:0 auto;padding:28px 20px 60px;}
+  h1{font-size:24px;margin:0 0 6px;}
+  h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--blue);}
+  h3{font-size:16px;margin:22px 0 8px;color:var(--ink);}
+  p{margin:8px 0;}
+  .sub{color:var(--mut);margin-bottom:18px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0;box-shadow:0 1px 0 rgba(27,31,36,.04);}
+  .ok{background:#eaf6ec;border-color:#afe2b9;color:#0f5323;}
+  .warn{background:#fff8e6;border-color:#f4d98a;color:#6b4e00;}
+  .bad{background:#fcefee;border-color:#f3b9bc;color:#8a1f24;}
+  code{background:#eef1f4;padding:2px 6px;border-radius:5px;font-family:"SF Mono",Consolas,monospace;font-size:13px;color:#0a3069;}
+  .step{display:flex;gap:12px;align-items:flex-start;margin:14px 0;}
+  .num{flex:0 0 30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;}
+  /* 模拟 GitHub 界面 */
+  .gh{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:14px 0;font-size:13.5px;}
+  .gh-bar{background:#24292f;color:#fff;padding:9px 14px;font-size:13px;display:flex;align-items:center;gap:8px;}
+  .gh-dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
+  .gh-body{background:#fff;padding:0;}
+  .gh-row{display:flex;align-items:center;gap:10px;padding:11px 14px;border-top:1px solid #eaecef;}
+  .gh-row:first-child{border-top:none;}
+  .gh-pill{font-size:12px;padding:1px 9px;border-radius:20px;font-weight:500;}
+  .pill-grey{background:#eaeef2;color:#57606a;}
+  .pill-green{background:#dafbe1;color:#1a7f37;border:1px solid #bae6c4;}
+  .pill-red{background:#ffebe9;color:#cf222e;border:1px solid #ffc1ba;}
+  .gh-btn{margin-left:auto;background:var(--blue);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:13px;cursor:pointer;}
+  .gh-btn-grey{background:#f6f8fa;border:1px solid var(--line);color:var(--ink);}
+  .gh-muted{color:var(--mut);font-size:12.5px;}
+  .gh-enable{background:#1f883d;color:#fff;border:none;padding:7px 16px;border-radius:6px;font-size:13px;margin:14px;}
+  .gh-disable{background:#f6f8fa;border:1px solid var(--line);color:var(--ink);padding:7px 16px;border-radius:6px;font-size:13px;margin:14px;}
+  .kv{margin:6px 0;}
+  .kv b{display:inline-block;width:120px;color:var(--mut);}
+  ol{padding-left:22px;}
+  li{margin:7px 0;}
+  .foot{margin-top:30px;color:var(--mut);font-size:13px;border-top:1px solid var(--line);padding-top:14px;}
+  .tag{display:inline-block;background:#ddf4ff;color:#0a4a8a;border:1px solid #a7d8ff;padding:1px 8px;border-radius:6px;font-size:12px;margin-right:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>云端定时任务没触发？排查与修复（图文详解）</h1>
+  <p class="sub">适用于「AI答不锂 / Energy Daily」GitHub Actions 每日自动产出流水线 · 2026-10-07</p>
+
+  <div class="card ok">
+    <b>结论先行：</b>本地代码没有问题。我核对了 <code>daily.yml</code> 的两个 cron，已正确换算成 UTC：
+    <code>37 22 * * *</code>（= 北京 06:37）与 <code>25 23 * * *</code>（= 北京 07:25）。
+    问题出在 <b>GitHub 端</b>——该工作流未启用或调度未激活，不是时区写错。
+  </div>
+
+  <h2>一、为什么今天没触发（诊断）</h2>
+  <p>我已在本地核实：线上 feed 最新单集停在 <b>10-06</b>，git 历史里只有 1 次自动化提交（10-06 12:50，是手动 <code>workflow_dispatch</code>，不是 cron）。说明 <code>schedule:</code> 很可能从未自动触发过。</p>
+  <p>由于本机 <code>gh</code> 未登录、仓库为私有，我无法直接读 Actions 日志。但按现象，根因锁定在以下三种之一：</p>
+  <div class="card warn">
+    <p><b>① 工作流被禁用（最常见）</b>——GitHub 的 scheduled workflow 需要在 Actions 页面处于 <b>Enabled</b> 状态。若此前被关掉或从未激活，cron 就完全不跑。</p>
+    <p><b>② GitHub 调度延迟</b>——免费额度共享 runner，schedule 经常延迟十几分钟到数小时，极少跳过。今天 06:37 / 07:25 的两次可能稍晚才到，但到 09:25 仍未出现，概率偏低。</p>
+    <p><b>③ 触发但失败</b>——密钥失效 / 依赖安装 / LLM 接口 / COS 上传失败，会留下一条<b>红色 run</b>。失败不产出单集也不提交。</p>
+  </div>
+  <p>因为 <code>site.yml</code>（push 触发）此前能成功部署，说明 Actions 整体没被禁用，所以 ① 多半是该 workflow 单独的 Enable 状态问题，或 ③。</p>
+
+  <h2>二、图文修复步骤</h2>
+
+  <h3>步骤 1 · 进入 Actions 确认「Energy Daily」状态</h3>
+  <p>打开 <code>https://github.com/zhencnli/energy-daily-aidabuli/actions</code>，左侧找到 <b>Energy Daily</b> 工作流。</p>
+  <div class="gh">
+    <div class="gh-bar"><span class="gh-dot" style="background:#ff5f56"></span><span class="gh-dot" style="background:#ffbd2e"></span><span class="gh-dot" style="background:#27c93f"></span><span style="margin-left:8px">GitHub · Actions</span></div>
+    <div class="gh-body">
+      <div class="gh-row"><span class="pill-grey">workflow</span><b>Energy Daily</b><span class="gh-muted">· 每日云端自动产出</span></div>
+      <div class="gh-row"><span class="pill-grey">workflow</span><b>Deploy site</b><span class="gh-muted">· 推送 site 时部署官网</span></div>
+    </div>
+  </div>
+
+  <h3>步骤 2 · 若显示「Enable workflow」就点它</h3>
+  <p>点进 <b>Energy Daily</b> 后，看页面右上角按钮：</p>
+  <div class="card">
+    <p><span class="tag">情况 A</span> 按钮是 <b style="color:var(--green)">Enable workflow</b> → 说明被禁用，<b>点它启用</b>（见下图）。启用后 cron 才会开始按时触发。</p>
+    <div class="gh">
+      <div class="gh-bar"><span class="gh-dot" style="background:#ff5f56"></span><span class="gh-dot" style="background:#ffbd2e"></span><span class="gh-dot" style="background:#27c93f"></span><span style="margin-left:8px">Energy Daily · 工作流</span></div>
+      <div class="gh-body">
+        <div class="gh-row"><span class="pill-grey">schedule</span><span>37 22 * * * / 25 23 * * *</span></div>
+        <button class="gh-enable">Enable workflow</button>
+      </div>
+    </div>
+    <p><span class="tag">情况 B</span> 按钮已经是 <b style="color:var(--mut)">Disable workflow</b> → 说明已启用，跳过本步，问题在 ② 或 ③。</p>
+    <div class="gh">
+      <div class="gh-bar"><span class="gh-dot" style="background:#ff5f56"></span><span class="gh-dot" style="background:#ffbd2e"></span><span class="gh-dot" style="background:#27c93f"></span><span style="margin-left:8px">Energy Daily · 工作流</span></div>
+      <div class="gh-body">
+        <div class="gh-row"><span class="pill-green">Enabled</span><span>该工作流已启用</span></div>
+        <button class="gh-disable">Disable workflow</button>
+      </div>
+    </div>
+  </div>
+
+  <h3>步骤 3 · 手动补发今天的单集（无论哪种根因都先做）</h3>
+  <p>同一个工作流页面，点右侧 <b>Run workflow</b> 下拉，按下图填写后运行——这会立即生成并发布 10-07 单集，把今天的缺口补上。</p>
+  <div class="gh">
+    <div class="gh-bar"><span class="gh-dot" style="background:#ff5f56"></span><span class="gh-dot" style="background:#ffbd2e"></span><span class="gh-dot" style="background:#27c93f"></span><span style="margin-left:8px">Run workflow</span></div>
+    <div class="gh-body" style="padding:14px;">
+      <div class="kv"><b>Branch</b><code>main</code> ✅（必须用默认分支）</div>
+      <div class="kv"><b>force</b><code>true</code> ✅（强制重生成今天的，即使已有记录）</div>
+      <div class="kv"><b>dry_run</b><code>false</code>（保持默认，别勾）</div>
+      <div class="kv"><b>rss_only</b><code>false</code>（保持默认）</div>
+      <button class="gh-btn" style="margin-top:10px">Run workflow ▸</button>
+    </div>
+  </div>
+  <p class="gh-muted">运行约 5–10 分钟（含联网搜资讯、DeepSeek 生成、edge-tts 配音、上传 COS）。可在 Actions 页面看实时日志。</p>
+
+  <h3>步骤 4 · 验证已发布</h3>
+  <p>跑完后，确认两处出现 10-07 单集：</p>
+  <ol>
+    <li>官网 <code>https://aili-1500638180.cos-website.ap-shanghai.myqcloud.com/</code> ——「最新单集」区域</li>
+    <li>feed <code>https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/podcast.xml</code> —— 最新 <code>&lt;pubDate&gt;</code> 应为 10-07</li>
+  </ol>
+  <div class="card">
+    <p class="gh-muted">本机一键核验（可选）：</p>
+    <code>curl -s "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/podcast.xml" | grep -o "&lt;pubDate&gt;.*&lt;/pubDate&gt;" | head -1</code>
+  </div>
+
+  <h2>三、如何避免以后再漏</h2>
+  <div class="card">
+    <p><b>方法 A（推荐，零成本）：</b>每天上午顺手看一眼官网或 feed，确认有新单集。最省事，但因为 GitHub schedule 本身不可靠，仍可能偶发漏跑。</p>
+    <p><b>方法 B（双保险，需 PAT）：</b>在本机 Windows「任务计划程序」里，加一个每天 08:30 的任务，调用 GitHub API 触发 <code>workflow_dispatch</code>。这样即使 GitHub 的 schedule 不跑，本地也会兜底触发一次。需要一个有 <code>workflow</code> 权限的 Personal Access Token（PAT）。</p>
+    <p><b>方法 C：</b>保持现有两个 cron 时间点（06:37 / 07:25），启用后基本够用，配合方法 A 监控即可。</p>
+  </div>
+
+  <h2>四、常见坑</h2>
+  <ul>
+    <li><b>60 天无活动自动禁用：</b>GitHub 会在仓库连续 60 天无 push 后，自动禁用 scheduled workflow。本仓库新建不用担心，但长期要保持偶尔提交（你每天的 bot 提交本身就是活动，能保活）。</li>
+    <li><b>Fork 仓库默认不启用 schedule：</b>如果你的仓库是从模板 fork 的，需要在 Settings → Actions 手动开启。</li>
+    <li><b>PAT 需 workflow 范围：</b>若用方法 B，创建 token 时务必勾选 <code>workflow</code> 权限，否则无法 dispatch。</li>
+    <li><b>secret 过期：</b>若步骤 3 跑出红色 run 且报 401/403，多半是 <code>TENCENT_COS_SECRET_KEY</code> 或 <code>DEEPSEEK_API_KEY</code> 失效，去 Settings → Secrets 更新。</li>
+  </ul>
+
+  <div class="foot">
+    本指南对应仓库：<code>zhencnli/energy-daily-aidabuli</code> · 工作流：<code>daily.yml</code>（Energy Daily）。<br>
+    如步骤 3 出现红色 run，把失败步骤截图发我，我帮你定位是哪一步（密钥 / 依赖 / 接口 / COS）。
+  </div>
+</div>
+</body>
+</html>
