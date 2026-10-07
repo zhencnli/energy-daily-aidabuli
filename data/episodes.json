@@ -20,5 +20,16 @@
     "duration_hms": "05:34",
     "duration_sec": 334.5,
     "wav_url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-06.wav"
+  },
+  {
+    "date": "2026-10-07",
+    "title": "Energy Daily · 2026-10-07｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日头条：Constellation 宣布与 Google 签署 20 年电力采购协议，通过 11 台现有机组升级为 PJM 电网新增 890MW 无碳电力，并带来 43 亿美元新投资，另有 15 年期 2,700MW 供电协议，带动 CEG、VST、TLN 及 OKLO、NNE、SMR 等核电与电力股上涨。光伏方面，Vishakha Renewables 递交 DRHP，拟发行新股募资 1,250 crore 卢比（约 125 亿卢比），其中 900 crore 卢比用于偿债；Industrial SalesLeads 9 月报告显示特斯拉正考虑在得州 Fort Bend County 投资 100 亿美元建太阳能电池工厂。储能方面，Turbo Energy 在西班牙三处工业站点投运 62.5MWh，为其 5,300 万美元、366MWh 合同的首批站点。风电方面，5 家整机公司营收合计 809.14 亿元，同比增 19.29%。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-07.mp3",
+    "length": 2339453,
+    "duration_hms": "05:35",
+    "duration_sec": 335.2,
+    "wav_url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-07.wav"
   }
 ]
