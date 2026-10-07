@@ -8,13 +8,15 @@ AI答不锂 · 制作台（Tkinter 桌面工具）
   [2] 上传发布  —— 选栏目/音频(或视频)/封面，填标题简介，确认上传并发布到同一 RSS
 
 依赖（用系统 Python 运行）:
-  pip install edge-tts mutagen pillow   # tkinter 为 Python 标准库
+  pip install edge-tts mutagen pillow numpy soundfile   # tkinter 为 Python 标准库
 COS 凭证: 在本仓库根目录放 .env（与 cos_upload.mjs 同格式）:
   TENCENT_COS_SECRET_ID=...
   TENCENT_COS_SECRET_KEY=...
   TENCENT_COS_REGION=ap-shanghai
   TENCENT_COS_BUCKET=aili-1500638180
 阿里通义 TTS: 在环境中设置 DASHSCOPE_API_KEY（或在 .env 里加一行）
+腾讯云长文本 TTS（默认，智宇501003）: 复用 COS 同一对 SecretId/SecretKey；
+  需为该子账号在 CAM 添加 QcloudTTSFullAccess 权限（凭证账号级通用，无需重新申请）。
 
 用法:
   python scripts/studio.py
@@ -131,8 +133,8 @@ class StudioApp:
         self.tts_column.grid(row=row, column=1, sticky="w")
 
         ttk.Label(f, text="TTS 接口：").grid(row=row, column=2, sticky="e", padx=4)
-        self.tts_provider = ttk.Combobox(f, values=["edge", "aliyun"], width=14, state="readonly")
-        self.tts_provider.set(CFG.get("tts", {}).get("provider", "aliyun"))
+        self.tts_provider = ttk.Combobox(f, values=["tencent", "edge", "aliyun"], width=14, state="readonly")
+        self.tts_provider.set(CFG.get("tts", {}).get("provider", "tencent"))
         self.tts_provider.grid(row=row, column=3, sticky="w")
 
         row += 1
@@ -367,16 +369,29 @@ class StudioApp:
         img = self.pub_img_var.get().strip() or None
         duration = audio_duration(audio)
 
+        # 发布前自检：node + COS 依赖是否就位（避免点下去才发现跑不起来）
+        _node, _err = pub.check_runtime(CFG)
+        if _err:
+            self._pub_log("❌ 环境自检未通过：" + _err)
+            messagebox.showerror("无法上传", _err)
+            return
+
+        size_mb = os.path.getsize(audio) / 1024 / 1024
         self.pub_run.configure(state="disabled")
         self.pub_progress.start(20)
-        self._pub_log(f"开始发布（栏目={col}，日期={date}，时长≈{int(duration)}秒）…")
+        self._pub_log(f"开始发布（栏目={col}，日期={date}，时长≈{int(duration)}秒，文件 {size_mb:.1f} MB）…")
+        self._pub_log("正在上传音频 → 封面 → RSS，通常 10–60 秒，请勿关闭窗口…")
 
         def worker():
-            res = pub.publish_episode(
-                audio_path=audio,
-                title=title, summary=summary, subtitle=subtitle,
-                date=date, duration=duration, column=col, image_path=img, dry_run=False,
-            )
+            # 必须捕获异常：否则线程静默退出，界面会永远停在“开始发布”
+            try:
+                res = pub.publish_episode(
+                    audio_path=audio,
+                    title=title, summary=summary, subtitle=subtitle,
+                    date=date, duration=duration, column=col, image_path=img, dry_run=False,
+                )
+            except Exception as exc:
+                res = {"ok": False, "error": f"{type(exc).__name__}: {exc}"}
             self.root.after(0, lambda: self._pub_done(res, audio, duration))
 
         threading.Thread(target=worker, daemon=True).start()
@@ -385,8 +400,13 @@ class StudioApp:
         self.pub_progress.stop()
         self.pub_run.configure(state="normal")
         if not res.get("ok"):
-            self._pub_log("发布失败：" + str(res.get("error")))
-            messagebox.showerror("发布失败", str(res.get("error")))
+            err = res.get("error") or json.dumps(res.get("detail") or res,
+                                                 ensure_ascii=False)[:500]
+            tip = {"preflight": "（环境/依赖）", "upload-audio": "（音频上传）",
+                   "upload-rss": "（RSS 上传）"}.get(res.get("stage"), "")
+            self._pub_log(f"❌ 发布失败{tip}：{err}")
+            self._pub_log("   排查：①仓库根目录执行 npm install；②node 在 PATH 中；③COS 凭证有效。")
+            messagebox.showerror("发布失败", err)
             return
         self.last_publish = res
         self._pub_log("✅ 发布成功！")

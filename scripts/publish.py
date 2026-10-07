@@ -26,6 +26,7 @@ import html
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 from datetime import datetime, timedelta, timezone
@@ -58,26 +59,100 @@ def load_env():
     return env
 
 
+# Node 兜底搜索路径：config 里的裸命令找不到时按序尝试
+_NODE_FALLBACKS = [
+    "node",
+    r"C:\Program Files\nodejs\node.exe",
+]
+# WorkBuddy 托管 node（版本目录名会变，用 glob 兜底）
+_WB_NODE_GLOB = os.path.join(
+    os.path.expanduser("~"), ".workbuddy", "binaries", "node", "versions")
+
+
+def resolve_node(cfg):
+    """把 config 的 node_bin 解析成真实可执行文件路径。
+    裸命令 -> PATH 查找 -> 常见安装位置 -> WorkBuddy 托管 node。
+    全部失败时明确报错（而不是抛 FileNotFoundError 静默死掉）。
+    """
+    nb = (cfg.get("node_bin") or "node").strip().strip('"')
+    # 1) 已是存在的绝对/相对路径
+    if os.path.exists(nb):
+        return nb
+    # 2) PATH 里查找
+    found = shutil.which(nb)
+    if found:
+        return found
+    # 3) 常见位置
+    for cand in _NODE_FALLBACKS:
+        if os.path.exists(cand):
+            return cand
+        f = shutil.which(cand)
+        if f:
+            return f
+    # 4) WorkBuddy 托管 node（取版本号最大的一个）
+    try:
+        import glob
+        cands = sorted(glob.glob(os.path.join(_WB_NODE_GLOB, "*", "node.exe")))
+        if cands:
+            return cands[-1]
+    except Exception:
+        pass
+    raise RuntimeError(
+        f"找不到 Node 可执行文件（config.json 的 node_bin='{cfg.get('node_bin')}'）。"
+        "请安装 Node.js 并确保其在 PATH 中，或把 config.json 的 node_bin 改成 node.exe 的绝对路径。")
+
+
+def check_runtime(cfg):
+    """发布前自检：node 可执行 + cos-nodejs-sdk-v5 依赖是否就位。
+    返回 (node_path, None) 或 (None, 错误说明)。
+    """
+    try:
+        node = resolve_node(cfg)
+    except RuntimeError as exc:
+        return None, str(exc)
+    sdk = os.path.join(ROOT, "node_modules", "cos-nodejs-sdk-v5")
+    if not os.path.isdir(sdk):
+        return node, ("缺少 Node 依赖 cos-nodejs-sdk-v5。请在仓库根目录执行："
+                      "npm install --no-audit --no-fund")
+    return node, None
+
+
 def cos(cfg, args, dry=False):
-    """调用 node 版 COS 上传工具, 返回解析后的 dict."""
+    """调用 node 版 COS 上传工具, 返回解析后的 dict.
+    任何失败都返回 {'ok': False, 'error': <可读原因>}，绝不静默。
+    """
     if dry:
         return {"ok": True, "dry_run": True, "key": args[args.index("--key") + 1]}
     env = dict(os.environ)
     env.update(load_env())
-    node_bin = cfg.get("node_bin")
+    node_bin = resolve_node(cfg)
     script = os.path.join(ROOT, "scripts", "cos_upload.mjs")
-    proc = subprocess.run(
-        [node_bin, script] + args,
-        capture_output=True, text=True, encoding="utf-8", env=env, cwd=ROOT,
-    )
-    out = (proc.stdout or "").strip()
-    if not out:
-        return {"ok": False, "error": f"(no stdout) {proc.stderr.strip()[:300]}"}
     try:
-        return json.loads(out)
+        proc = subprocess.run(
+            [node_bin, script] + args,
+            capture_output=True, text=True, encoding="utf-8", env=env, cwd=ROOT,
+            timeout=1800,  # 长音频/慢网兜底，30 分钟
+        )
+    except FileNotFoundError:
+        return {"ok": False, "error": f"找不到 Node 可执行文件：{node_bin}"}
+    except subprocess.TimeoutExpired:
+        return {"ok": False, "error": "COS 操作超时（>30 分钟），请检查网络后重试"}
+    out = (proc.stdout or "").strip()
+    err = (proc.stderr or "").strip()
+    if not out:
+        # node 崩溃（最常见：缺 cos-nodejs-sdk-v5 / 路径错）时错误只在 stderr
+        return {"ok": False,
+                "error": f"node 进程退出码 {proc.returncode}，无 stdout 输出。stderr: {err[:400]}"}
+    try:
+        data = json.loads(out)
     except json.JSONDecodeError:
         m = re.search(r"\{.*\}", out, re.S)
-        return json.loads(m.group(0)) if m else {"ok": False, "error": out[:300]}
+        if not m:
+            return {"ok": False, "error": out[:300]}
+        data = json.loads(m.group(0))
+    if not data.get("ok") and not data.get("error"):
+        data["error"] = err[:300] or "未知错误"
+    return data
 
 
 def load_episodes():
@@ -242,7 +317,17 @@ def publish_episode(audio_path=None, mp3_path=None, wav_path=None, title=None, s
     if not title:
         return {"ok": False, "error": "缺少标题"}
 
-    base_name = cfg["naming"]["audio_basename"].format(date=date)
+    # 0) 运行时自检：node / cos-nodejs-sdk-v5 是否就位（提前报错，避免传到一半才失败）
+    if not dry_run:
+        _node, _err = check_runtime(cfg)
+        if _err:
+            return {"ok": False, "stage": "preflight", "error": _err}
+
+    # 音频 basename：按栏目区分，避免同日 Brief / Insight 互相覆盖
+    naming = cfg.get("naming", {}) or {}
+    tmpl = ((naming.get("audio_basename_by_column", {}) or {}).get(column)
+            or naming.get("audio_basename", "energydaily-{date}"))
+    base_name = tmpl.format(date=date)
     ext = os.path.splitext(audio_path)[1].lower()
     # 视频用 video/mp4；音频按扩展名
     ctype = {"mp4": "video/mp4", "mov": "video/quicktime", "m4a": "audio/mp4",
@@ -253,7 +338,8 @@ def publish_episode(audio_path=None, mp3_path=None, wav_path=None, title=None, s
     r_audio = cos(cfg, ["upload", "--file", audio_path, "--key", key_audio,
                        "--content-type", ctype], dry_run)
     if not r_audio.get("ok"):
-        return {"ok": False, "stage": "upload-audio", "detail": r_audio}
+        return {"ok": False, "stage": "upload-audio",
+                "error": f"音频上传失败：{r_audio.get('error') or r_audio}", "detail": r_audio}
 
     # 2) 上传本集独立封面（可选）
     img_url = None
@@ -297,7 +383,8 @@ def publish_episode(audio_path=None, mp3_path=None, wav_path=None, title=None, s
     r_rss = cos(cfg, ["upload", "--file", RSS_LOCAL, "--key", c["key_rss"],
                       "--content-type", "application/rss+xml; charset=utf-8"], dry_run)
     if not r_rss.get("ok"):
-        return {"ok": False, "stage": "upload-rss", "detail": r_rss}
+        return {"ok": False, "stage": "upload-rss",
+                "error": f"RSS 上传失败：{r_rss.get('error') or r_rss}", "detail": r_rss}
 
     base = public_base(cfg, env)
     origin = cos_origin(env)
@@ -328,7 +415,8 @@ def rebuild_rss_only(dry_run=False, cfg=None):
     r = cos(cfg, ["upload", "--file", tmp, "--key", cfg["cos"]["key_rss"],
                   "--content-type", "application/rss+xml; charset=utf-8"], dry_run)
     if not r.get("ok"):
-        return {"ok": False, "stage": "upload-rss", "detail": r}
+        return {"ok": False, "stage": "upload-rss",
+                "error": f"RSS 上传失败：{r.get('error') or r}", "detail": r}
     return {"ok": True, "rss_only": True,
             "feed_url": f"{public_base(cfg, env)}/{cfg['cos']['key_rss']}",
             "episode_count": len(eps)}

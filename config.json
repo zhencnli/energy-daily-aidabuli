@@ -38,7 +38,7 @@
     }
   },
   "tts": {
-    "provider": "aliyun",
+    "provider": "tencent",
     "target_chars_per_min": 260,
     "target_min_sec": 1200,
     "target_max_sec": 2400,
@@ -60,6 +60,18 @@
       "format": "mp3",
       "rate": 1.0
     },
+    "tencent": {
+      "secret_id_env": "TENCENT_COS_SECRET_ID",
+      "secret_key_env": "TENCENT_COS_SECRET_KEY",
+      "voice_male": 501003,
+      "voice_female": 501002,
+      "codec": "mp3",
+      "sample_rate": 16000,
+      "speed": 0,
+      "volume": 0,
+      "host": "tts.tencentcloudapi.com",
+      "note": "长文本语音合成（智宇501003阅读男声/智菊501002阅读女声）。与COS共用同一对账号密钥（凭证账号级通用），但签名是TC3-HMAC-SHA256，与COS的q-sign不同；需为该子账号加 QcloudTTSFullAccess 权限。长文本接口不享受免费额度，从首字符计费。"
+    },
     "speakers": {
       "laoli": { "role": "male", "label": "老锂（男声）" },
       "xiaoai": { "role": "female", "label": "小爱（女声）" }
@@ -73,6 +85,10 @@
   },
   "naming": {
     "audio_basename": "energydaily-{date}",
+    "audio_basename_by_column": {
+      "brief": "energydaily-{date}",
+      "insight": "energy-ai-{date}"
+    },
     "date_format": "%Y-%m-%d"
   }
 }

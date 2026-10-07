@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>腾讯云 TTS 开通与授权 · 图文指南 · AI答不锂</title>
+<style>
+  :root{
+    --bg:#f6f8fb; --card:#ffffff; --ink:#1f2a37; --sub:#5b6b7d;
+    --line:#e3e8ef; --brand:#0b6bcb; --brand-soft:#e8f1fd;
+    --ok:#15803d; --ok-soft:#e7f6ec; --warn:#b45309; --warn-soft:#fdf2e2;
+    --danger:#b91c1c; --danger-soft:#fdecec;
+    --code:#0f172a; --code-bg:#0f172a; --code-ink:#e2e8f0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.65;}
+  .wrap{max-width:960px;margin:0 auto;padding:28px 20px 64px;}
+  h1{font-size:26px;margin:0 0 6px}
+  h2{font-size:20px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--brand)}
+  h3{font-size:16px;margin:20px 0 8px;color:var(--brand)}
+  p{margin:8px 0}
+  .lead{color:var(--sub);font-size:15px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:18px 20px;margin:14px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .step{display:flex;gap:14px;align-items:flex-start;margin:16px 0}
+  .num{flex:0 0 30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px}
+  .num.new{background:var(--danger)}
+  .step-body{flex:1}
+  .note{border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px}
+  .note.ok{background:var(--ok-soft);border:1px solid #bfe6cb;color:#14532d}
+  .note.warn{background:var(--warn-soft);border:1px solid #f3d9a6;color:#7c3d12}
+  .note.info{background:var(--brand-soft);border:1px solid #cfe2fb;color:#0b4a8f}
+  .note.danger{background:var(--danger-soft);border:1px solid #f3bcbc;color:#7f1d1d}
+  code,.code{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;font-size:13px}
+  pre{background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:14px 16px;
+    overflow:auto;font-size:13px;line-height:1.5}
+  pre .cm{color:#7dd3fc}
+  pre .hi{background:#14532d;color:#bbf7d0;padding:1px 4px;border-radius:4px;display:inline-block}
+  .mock{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+  .mock .cap{font-size:13px;color:var(--sub);margin-top:8px}
+  svg{display:block;max-width:100%;height:auto}
+  .pill{display:inline-block;background:var(--brand-soft);color:var(--brand);
+    border:1px solid #cfe2fb;border-radius:999px;padding:2px 10px;font-size:13px;margin:2px 4px 2px 0}
+  .foot{color:var(--sub);font-size:13px;margin-top:30px;border-top:1px solid var(--line);padding-top:14px}
+  a{color:var(--brand)}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin:10px 0}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--brand-soft);color:var(--brand)}
+  tr:nth-child(even) td{background:#fafcff}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>腾讯云 TTS 开通与授权 · 图文指南</h1>
+  <p class="lead">目标：让现有 <strong>COS 子账号</strong> 能调用「腾讯云长文本语音合成」（智宇 501003 / 智菊 501002），
+  用于 Insight 栏目录音生成。</p>
+
+  <div class="note.danger">
+    <strong>⚠️ 重要更正（真实联通测试后新增）：</strong> 只加 CAM 权限<strong>还不够</strong>！
+    实测调用返回 <code>UnsupportedOperation.ServerNotOpen: TTS service is not open</code>——
+    腾讯云 TTS 必须由<strong>主账号先「开通服务」</strong>（实名 + 人脸认证 + 同意用户协议）才能首次调用。
+    这是独立的第 ① 步，<strong>开通 ≠ 加权限</strong>，两者都要做。
+  </div>
+
+  <h2>四步总览（你已完成其中两步）</h2>
+  <div class="card">
+    <table>
+      <tr><th>步骤</th><th>操作</th><th>在哪做</th><th>状态</th></tr>
+      <tr><td>①</td><td><strong>开通语音合成服务</strong>（实名 + 人脸 + 同意协议 → 立即开通）</td><td>主账号 · TTS 控制台</td><td>✅ 已完成</td></tr>
+      <tr><td>①·2</td><td><strong>开通后付费</strong>（长文本无免费额度，后付费默认关闭，必须手动开）</td><td>主账号 · TTS 控制台「费用 / 计费模式」</td><td>⬜ <strong>待办</strong></td></tr>
+      <tr><td>②</td><td>复用现有 COS 子账号密钥（确认，无需新建）</td><td>CAM · API 密钥页</td><td>✅ 已具备</td></tr>
+      <tr><td>③</td><td>给子账号关联 <code>QcloudTTSFullAccess</code></td><td>CAM · 权限页</td><td>✅ 已完成（12:49）</td></tr>
+      <tr><td>④</td><td><code>config.json</code> 的 <code>tencent</code> 块已默认指向 COS 密钥</td><td>本地文件</td><td>✅ 已就绪，无需改动</td></tr>
+    </table>
+    <div class="note.info">
+      <strong>为什么密钥能复用？</strong> 腾讯云的 <code>SecretId / SecretKey</code> 是<strong>账号级通用</strong>的：
+      同一对密钥能调 COS、TTS、CI 等所有服务。你仓库 <code>.env</code> 里的
+      <code>TENCENT_COS_SECRET_ID</code> / <code>TENCENT_COS_SECRET_KEY</code> 就是 TTS 要的那对。
+    </div>
+    <div class="note.danger">
+      <strong>⚠️ 还有最后一个必做项：开通「后付费」。</strong> 实测你已越过 <code>ServerNotOpen</code>（服务已开），
+      但调用报 <code>PkgExhausted</code> —— 根因是<strong>后付费默认关闭</strong>。长文本接口不享免费额度，
+      必须手动开通后付费或买资源包才能计费。请见下方 <strong>「第 ①·2 步：开通后付费」</strong> 按图操作（零预付、按日从余额扣费）。
+    </div>
+  </div>
+
+  <!-- ============ STEP 1（新增，必做） ============ -->
+  <h2>第 ① 步：主账号开通「语音合成」服务 <span style="color:#b91c1c">（必做·待办）</span></h2>
+  <div class="card">
+    <div class="step">
+      <div class="num new">1</div>
+      <div class="step-body">
+        <p>用<strong>主账号</strong>登录腾讯云控制台，打开
+        <a href="https://console.cloud.tencent.com/tts">语音合成控制台</a>。
+        若账号尚未实名，先完成<strong>实名认证</strong>（本项目做 COS 时通常已实名）。</p>
+        <div class="mock">
+          <svg viewBox="0 0 720 300" role="img" aria-label="语音合成控制台开通页示意图">
+            <rect x="0" y="0" width="720" height="300" rx="10" fill="#ffffff" stroke="#e3e8ef"/>
+            <rect x="0" y="0" width="720" height="44" rx="10" fill="#f3f6fb"/>
+            <rect x="0" y="34" width="720" height="10" fill="#f3f6fb"/>
+            <text x="20" y="28" font-size="15" font-weight="700" fill="#0b6bcb">语音合成 TTS · 控制台</text>
+            <text x="480" y="28" font-size="12" fill="#5b6b7d">主账号：1000***2626（用主账号登录）</text>
+            <rect x="0" y="44" width="160" height="256" fill="#fafcff" stroke="#e3e8ef"/>
+            <rect x="8" y="58" width="144" height="26" rx="6" fill="#e8f1fd"/>
+            <text x="20" y="76" font-size="13" font-weight="700" fill="#0b6bcb">▸ 服务开通 / 概览</text>
+            <text x="20" y="112" font-size="13" fill="#5b6b7d">资源包管理</text>
+            <text x="20" y="140" font-size="13" fill="#5b6b7d">合成音频</text>
+            <text x="20" y="168" font-size="13" fill="#5b6b7d">用量统计</text>
+            <rect x="180" y="66" width="520" height="196" rx="10" fill="#fafcff" stroke="#e3e8ef"/>
+            <text x="200" y="96" font-size="15" font-weight="700" fill="#1f2a37">开通语音合成服务</text>
+            <text x="200" y="122" font-size="12" fill="#5b6b7d">① 实名认证 ✔（已有）　② 人脸认证 ⬜　③ 阅读并同意《用户协议》 ⬜</text>
+            <rect x="200" y="138" width="14" height="14" rx="3" fill="#fff" stroke="#0b6bcb"/>
+            <text x="222" y="150" font-size="12" fill="#1f2a37">我已阅读并同意《腾讯云语音合成服务用户协议》</text>
+            <rect x="200" y="172" width="120" height="38" rx="8" fill="#0b6bcb"/>
+            <text x="232" y="196" font-size="14" font-weight="700" fill="#ffffff">立即开通</text>
+            <text x="200" y="236" font-size="12" fill="#7c3d12">⚠ 需主账号本人完成人脸认证；编程访问子账号无控制台登录、做不了此步</text>
+          </svg>
+          <div class="cap">图 1：语音合成控制台 → 勾选同意《用户协议》→「立即开通」。</div>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num new">2</div>
+      <div class="step-body">
+        <p>开通后，如需马上试用可去「资源包管理」领取免费包——但请务必注意：</p>
+        <div class="note.warn">
+          <strong>免费额度只覆盖「通用语音合成」接口，<span style="color:#b91c1c">不含长文本语音合成接口</span>。</strong>
+          本项目用的是长文本接口（<code>CreateTtsTask</code>），<strong>从第一个字符就计费</strong>，免费包用不上。
+          <br><br>
+          ⚠️ <strong>后付费模式默认关闭！</strong> 仅"开通服务"还不够——长文本只能走
+          <strong>预付费资源包</strong>或<strong>后付费</strong>之一。
+          若两者都未配置，调用会报 <code>PkgExhausted（资源包额度已耗尽）</code>。
+          请去 TTS 控制台<strong>「开通后付费」</strong>（零预付、按日从余额扣费；<strong>详细步骤见下方「第 ①·2 步」</strong>），或去
+          <a href="https://buy.cloud.tencent.com/tts" target="_blank" rel="noopener">购买资源包</a>
+          （长文本·大模型音色最小 50 万字符 / ¥140）。开通后付费后请确保<strong>账户余额 &gt; 0</strong>。
+        </div>
+        <div class="note.ok">
+          ✅ 完成后，第 ① 步即可打勾。之后 API 调用（子账号密钥 + 已加的 QcloudTTSFullAccess）就能正常返回音频。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 1.2：开通后付费 ============ -->
+  <h2>第 ①·2 步：开通「后付费」（零预付 · 必做 · 待办）</h2>
+  <div class="card">
+    <div class="note.info">
+      <strong>为什么要做这步？</strong> 腾讯云 TTS 的<strong>后付费模式默认关闭</strong>。开通服务 ≠ 能计费——
+      长文本接口（本项目用的 <code>CreateTtsTask</code>）<strong>不享受任何免费额度</strong>，只能走
+      <strong>预付费资源包</strong>或<strong>后付费</strong>之一。两者都没配，就会报
+      <code>PkgExhausted（资源包额度已耗尽）</code>。开通后付费后，系统<strong>按自然日结算</strong>
+      （每个自然日对上一日用量出账单并扣费），从账户余额划扣。
+    </div>
+    <div class="step">
+      <div class="num new">1</div>
+      <div class="step-body">
+        <p>用<strong>主账号</strong>打开
+        <a href="https://console.cloud.tencent.com/tts" target="_blank" rel="noopener">语音合成控制台</a>，
+        在左侧导航找到 <strong>「费用」/「计费模式」</strong>（或「费用中心 → 语音合成」），进入后找到
+        <strong>「后付费」</strong>开关并点击 <strong>「开通后付费」</strong>。</p>
+        <div class="mock">
+          <svg viewBox="0 0 720 280" role="img" aria-label="TTS控制台开通后付费示意图">
+            <rect x="0" y="0" width="720" height="280" rx="10" fill="#ffffff" stroke="#e3e8ef"/>
+            <rect x="0" y="0" width="720" height="44" rx="10" fill="#f3f6fb"/>
+            <rect x="0" y="34" width="720" height="10" fill="#f3f6fb"/>
+            <text x="20" y="28" font-size="15" font-weight="700" fill="#0b6bcb">语音合成 TTS · 控制台</text>
+            <text x="470" y="28" font-size="12" fill="#5b6b7d">主账号：1000***2626</text>
+            <rect x="0" y="44" width="160" height="236" fill="#fafcff" stroke="#e3e8ef"/>
+            <text x="20" y="68" font-size="13" font-weight="700" fill="#5b6b7d">服务开通 / 概览</text>
+            <text x="20" y="96" font-size="13" fill="#5b6b7d">资源包管理</text>
+            <rect x="8" y="110" width="144" height="26" rx="6" fill="#e8f1fd"/>
+            <text x="20" y="128" font-size="13" font-weight="700" fill="#0b4a8f">▸ 费用 / 计费模式</text>
+            <text x="20" y="162" font-size="13" fill="#5b6b7d">合成音频</text>
+            <text x="20" y="190" font-size="13" fill="#5b6b7d">用量统计</text>
+            <rect x="180" y="66" width="520" height="198" rx="10" fill="#fafcff" stroke="#e3e8ef"/>
+            <text x="200" y="96" font-size="15" font-weight="700" fill="#1f2a37">计费模式</text>
+            <text x="200" y="124" font-size="13" fill="#5b6b7d">长文本语音合成 · 大模型音色</text>
+            <rect x="200" y="138" width="260" height="40" rx="8" fill="#fff" stroke="#e3e8ef"/>
+            <text x="216" y="163" font-size="13" fill="#7c3d12">后付费（按日结算）：<tspan font-weight="700">未开通</tspan></text>
+            <rect x="480" y="138" width="120" height="40" rx="8" fill="#0b6bcb"/>
+            <text x="500" y="163" font-size="14" font-weight="700" fill="#ffffff">开通后付费</text>
+            <text x="200" y="206" font-size="12" fill="#7c3d12">⚠ 开通后默认从账户余额按日扣费，请确保余额 &gt; 0</text>
+            <text x="200" y="230" font-size="12" fill="#5b6b7d">（也可不选后付费，改买预付费资源包，见正文对比）</text>
+          </svg>
+          <div class="cap">图 1b：语音合成控制台 → 费用 / 计费模式 → 点「开通后付费」。</div>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num new">2</div>
+      <div class="step-body">
+        <p>确认账户<strong>余额 &gt; 0</strong>（充值中心），然后重跑合成命令验证：</p>
+        <pre><span class="cm"># 回到项目目录，重跑（voice.txt 写完整路径）</span>
+cd /d D:\Projects\energy-daily
+python scripts\tts_providers.py tencent "C:\Users\zhenc\Music\voice.txt"</pre>
+        <div class="note.warn">
+          <strong>后付费 vs 预付费资源包（你的场景怎么选）：</strong>
+          <br>• <strong>后付费（推荐）</strong>：零预付、无过期作废风险、随用随停；你每日用量极小，永远落在最低档
+          <strong>3.20 元/万字符</strong>，年化约 <strong>¥384</strong>。<br>
+          • <strong>预付费最小包</strong>：50 万字符/¥140（2.8 元/万字符）单价略低，但要先付 ¥140、1 年有效期、用不完作废；
+          你月用 ~10 万，一个包撑 5 个月，年化约 ¥380，几乎一样，却要锁钱 + 赌用量。<br>
+          → 结论：直接开<strong>后付费</strong>最省心，不必买包。
+        </div>
+        <div class="note.ok">
+          ✅ 开通后付费成功 → 重跑命令应正常生成 mp3；失败再看上方报错对照表。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 2 ============ -->
+  <h2>第 ② 步：确认并复用现有 COS 子账号密钥（✅ 已具备）</h2>
+  <div class="card">
+    <p>腾讯云 <code>SecretId / SecretKey</code> 是<strong>账号级通用</strong>的——同一对密钥能调 COS、TTS、CI 全部服务。
+    你仓库 <code>.env</code> 里的 <code>TENCENT_COS_SECRET_ID</code> / <code>TENCENT_COS_SECRET_KEY</code>
+    就是 TTS 要复用的那对，<strong>无需新申请、无需新建账号</strong>。</p>
+    <div class="mock">
+      <svg viewBox="0 0 720 200" role="img" aria-label="API密钥标签页示意图">
+        <rect x="0" y="0" width="720" height="200" rx="10" fill="#ffffff" stroke="#e3e8ef"/>
+        <text x="20" y="28" font-size="14" font-weight="700" fill="#1f2a37">energy-daily-bot · 用户详情</text>
+        <rect x="20" y="42" width="80" height="28" rx="6" fill="#fff" stroke="#e3e8ef"/>
+        <text x="36" y="61" font-size="12" fill="#5b6b7d">基本信息</text>
+        <rect x="108" y="42" width="80" height="28" rx="6" fill="#e8f1fd" stroke="#0b6bcb"/>
+        <text x="124" y="61" font-size="12" font-weight="700" fill="#0b4a8f">API密钥</text>
+        <rect x="196" y="42" width="80" height="28" rx="6" fill="#fff" stroke="#e3e8ef"/>
+        <text x="212" y="61" font-size="12" fill="#5b6b7d">权限</text>
+        <rect x="20" y="84" width="680" height="96" rx="8" fill="#fafcff" stroke="#e3e8ef"/>
+        <text x="36" y="110" font-size="12" fill="#5b6b7d">SecretId</text>
+        <text x="120" y="110" font-size="12" font-family="monospace" fill="#1f2a37">AKID****************i8Rc</text>
+        <text x="36" y="138" font-size="12" fill="#5b6b7d">SecretKey</text>
+        <text x="120" y="138" font-size="12" font-family="monospace" fill="#1f2a37">************************</text>
+        <text x="36" y="166" font-size="12" fill="#15803d">● 与 .env 的 TENCENT_COS_SECRET_ID 同源 → TTS 直接复用</text>
+      </svg>
+      <div class="cap">图 2：CAM → 用户 → 子用户 → API 密钥，确认 SecretId 与 .env 一致即完成「复用」。</div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 3 ============ -->
+  <h2>第 ③ 步：给子账号关联 QcloudTTSFullAccess（✅ 已完成）</h2>
+  <div class="card">
+    <p>你的截图显示该策略已关联成功（关联时间 2026-10-07 12:49:21）：</p>
+    <div class="mock">
+      <svg viewBox="0 0 720 150" role="img" aria-label="权限策略列表示意图">
+        <rect x="0" y="0" width="720" height="150" rx="10" fill="#ffffff" stroke="#e3e8ef"/>
+        <text x="20" y="30" font-size="14" font-weight="700" fill="#1f2a37">energy-daily-bot · 权限</text>
+        <rect x="20" y="46" width="680" height="30" rx="6" fill="#e8f1fd" stroke="#0b6bcb"/>
+        <text x="34" y="66" font-size="12" font-weight="700" fill="#0b4a8f">QcloudTTSFullAccess</text>
+        <text x="230" y="66" font-size="12" fill="#5b6b7d">语音合成（TTS）全读写访问权限 · 预设策略</text>
+        <text x="620" y="66" font-size="12" fill="#15803d">✓ 已关联</text>
+        <rect x="20" y="86" width="680" height="30" rx="6" fill="#fff" stroke="#e3e8ef"/>
+        <text x="34" y="106" font-size="12" fill="#1f2a37">energy-daily-cos-write</text>
+        <text x="230" y="106" font-size="12" fill="#5b6b7d">自定义策略 · COS 桶读写</text>
+        <text x="620" y="106" font-size="12" fill="#15803d">✓ 原有</text>
+      </svg>
+      <div class="cap">图 3：两条策略并存，COS 能力不受影响。</div>
+    </div>
+    <div class="note.info">
+      子账号 <code>energy-daily-bot</code>（账号 ID 100053454095，编程访问）同时挂了这两条策略即为正确。
+      若日后想更收敛，可自建只含 <code>tts:CreateTtsTask</code> / <code>tts:DescribeTtsTaskStatus</code> 的自定义策略替代。
+    </div>
+  </div>
+
+  <!-- ============ STEP 4 ============ -->
+  <h2>第 ④ 步：config.json 已默认指向 COS 密钥（✅ 无需改动）</h2>
+  <div class="card">
+    <p><code>config.json</code> 的 <code>tencent</code> 块里，<code>secret_id_env</code> / <code>secret_key_env</code>
+    已默认指向 COS 那两个变量名；本地脚本会自动把仓库根 <code>.env</code> 注入进程环境（不覆盖已显式导出的变量）。
+    这一步你<strong>什么都不用改</strong>。</p>
+    <pre><span class="cm"># 仓库根 .env（已就位）</span>
+TENCENT_COS_SECRET_ID=AKID****************i8Rc
+TENCENT_COS_SECRET_KEY=************************
+
+<span class="cm"># config.json 的 tencent 块（已就绪）</span>
+"tts": {
+  "provider": "tencent",
+  "tencent": {
+    "secret_id_env":  "TENCENT_COS_SECRET_ID",   <span class="hi">复用 COS 密钥</span>
+    "secret_key_env": "TENCENT_COS_SECRET_KEY",  <span class="hi">复用 COS 密钥</span>
+    "voice_male":   501003,   <span class="cm">// 智宇 · 阅读男声（老锂）</span>
+    "voice_female": 501002,   <span class="cm">// 智菊 · 阅读女声（小爱）</span>
+    "host": "tts.tencentcloudapi.com"
+  }
+}</pre>
+    <div class="note.ok">
+      ✅ 另外：本次修复了旧版一个隐患——<code>tts_providers.py</code> 现在会自动读取 <code>.env</code>（此前只读系统环境变量，
+      导致 GUI/命令行都拿不到密钥）。已实测注入成功（<code>ENV_SECRET_ID_PRESENT: True</code>）。
+    </div>
+  </div>
+
+  <h2>验证：跑一次真实合成</h2>
+  <div class="card">
+    <p>第 ① 步开通完成后，任选一种验证：</p>
+    <pre><span class="cm"># 方式 A：命令行直合成一篇稿件（单人，智宇男声）</span>
+cd D:/Projects/energy-daily
+python scripts/tts_providers.py tencent 你的稿件.txt
+
+<span class="cm"># 方式 B：开 GUI 制作台，TTS 接口下拉选 tencent，生成后直接上传发布</span>
+python scripts/studio.py</pre>
+    <table>
+      <tr><th>报错关键词</th><th>含义</th><th>处理</th></tr>
+      <tr><td><strong>ServerNotOpen</strong></td><td>服务未开通</td><td><strong>回到第 ① 步：主账号去 TTS 控制台点「立即开通」</strong></td></tr>
+      <tr><td><strong>PkgExhausted</strong></td><td>资源包耗尽 / 计费未配置</td><td>长文本无免费额度。<strong>去 TTS 控制台「开通后付费」或购买资源包</strong>（详见正文注意 ①）</td></tr>
+      <tr><td>AuthFailure.SignatureFailure</td><td>签名算错</td><td>检查系统时间/时区、密钥是否复制完整</td></tr>
+      <tr><td>UnauthorizedOperation / NoPermission</td><td>子账号无 TTS 权限</td><td>确认第 ③ 步 QcloudTTSFullAccess 已关联</td></tr>
+      <tr><td>LimitExceeded / InsufficientBalance</td><td>余额不足或限频</td><td>长文本无免费额度，确认后付费/余额</td></tr>
+    </table>
+  </div>
+
+  <h2>注意事项</h2>
+  <div class="card">
+    <div class="note.warn"><strong>1. 长文本接口不享受免费额度，且后付费默认关闭。</strong> 免费包只覆盖通用接口；
+    长文本只能走预付费资源包或后付费。后付费需<strong>手动在控制台开通</strong>（默认关闭），否则报 <code>PkgExhausted</code>。
+    长文本·大模型音色（智宇所在档）后付费 <strong>2.3–3.2 元 / 万字符</strong>
+    （分享对话里写的 1.2 是通用实时档，已核实纠错）。</div>
+    <div class="note.warn"><strong>2. 签名算法与 COS 不同。</strong> COS 用 <code>q-sign</code>，
+    TTS 用 <code>TC3-HMAC-SHA256</code>；密钥通用但代码不能互用——TTS 部分已用标准库零依赖实现。</div>
+    <div class="note.warn"><strong>3. ResultUrl 是临时链接。</strong> 服务端只保留 <strong>24 小时</strong>；
+    制作台会自动下载后转存进 COS，别长期保存该 URL，也不要写进 RSS。</div>
+  </div>
+
+  <h2>成本测算（你的量级）</h2>
+  <div class="card">
+    <p>按单人讲稿 ~250 字/分钟估算，Insight 单集 20–40 分钟 ≈ 5,000–10,000 字；月产 ≤10 条。</p>
+    <table>
+      <tr><th>场景</th><th>单集字数</th><th>单价 2.3 元/万</th><th>单价 3.2 元/万</th><th>月 10 条</th></tr>
+      <tr><td>典型（35 分钟）</td><td>~8,750</td><td>¥2.0</td><td>¥2.8</td><td>¥20–28</td></tr>
+      <tr><td>上限（60 分钟）</td><td>~15,000</td><td>¥3.5</td><td>¥4.8</td><td>¥35–48</td></tr>
+    </table>
+    <p class="lead">年化约 <strong>¥240–580</strong>，对月产 ≤10 条的个人播客可忽略。以控制台账单为准。</p>
+    <div class="note.info"><strong>结算周期：后付费按自然日结算</strong>（每天对上一日用量出账单并扣费，非按月）；
+    预付费资源包为预先付款、1 年有效期。你的零散用量下，<strong>后付费最省心且成本几乎相同</strong>，推荐直接开通后付费，不必买包。</div>
+  </div>
+
+  <div class="foot">
+    配套：<code>scripts/tts_providers.py</code>（TencentLongFormTTSProvider，TC3 签名 + 友好报错）、
+    <code>config.json</code>（tencent 块）、<code>scripts/studio.py</code>（GUI 制作台）。
+    代码改动尚未 commit，需要时再提交。
+  </div>
+
+</div>
+</body>
+</html>
