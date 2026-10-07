@@ -93,7 +93,7 @@
   </div>
 
   <h2>第 ① 步 · 腾讯云 CAM 重新应用策略</h2>
-  <p>目标：让 COS 子账号（密钥 <code>SecretId</code> 以 <code>AKIDTyGLCr…</code> 开头，即我们新建的专用子账号）拥有桶根 <code>index.html</code> / <code>logo.jpg</code> 的写入权限。</p>
+  <p>目标：让 COS 子账号（密钥 <code>SecretId</code> 以 <code>AKID******…</code> 开头，即我们新建的专用子账号）拥有桶根 <code>index.html</code> / <code>logo.jpg</code> 的写入权限。</p>
 
   <div class="step">
     <div class="num">1</div>
@@ -121,14 +121,14 @@
           <text x="520" y="78" font-size="11" fill="#5b6b7d" font-family="sans-serif">操作</text>
           <rect x="186" y="90" width="510" height="30" rx="6" fill="#fff" stroke="#cfe2fb"/>
           <text x="196" y="110" font-size="12" fill="#1f2a37" font-family="sans-serif">energy-daily-bot</text>
-          <text x="360" y="110" font-size="11" fill="#0b4a8f" font-family="monospace">AKIDTyGLCr…</text>
+          <text x="360" y="110" font-size="11" fill="#0b4a8f" font-family="monospace">AKID******…</text>
           <text x="520" y="110" font-size="12" fill="#0b6bcb" font-family="sans-serif">查看 ›</text>
           <text x="196" y="150" font-size="12" fill="#b45309" font-family="sans-serif">↑ 点击这一行进入子账号详情</text>
           <rect x="186" y="168" width="510" height="58" rx="8" fill="#fdf2e2" stroke="#f3d9a6"/>
           <text x="198" y="190" font-size="12" fill="#7c3d12" font-family="sans-serif">在子账号详情页，切到「权限」Tab，找到已绑定的</text>
           <text x="198" y="210" font-size="12" fill="#7c3d12" font-family="sans-serif">自定义策略（如 energy-daily-cos），点「编辑」。</text>
         </svg>
-        <div class="cap">找到密钥以 AKIDTyGLCr 开头的子账号 → 点进去 →「权限」Tab。</div>
+        <div class="cap">找到密钥以 AKID****** 开头的子账号 → 点进去 →「权限」Tab。</div>
       </div>
     </div>
   </div>
@@ -216,7 +216,7 @@
 
   <h2>兜底 · 如果还失败</h2>
   <ul>
-    <li>跑完 Deploy site 仍是红色 / AccessDenied：说明第 ① 步策略没保存成功或绑错了子账号。回到 CAM 确认<strong>绑定到 AKIDTyGLCr 子账号</strong>的那条策略确实含桶根两行。</li>
+    <li>跑完 Deploy site 仍是红色 / AccessDenied：说明第 ① 步策略没保存成功或绑错了子账号。回到 CAM 确认<strong>绑定到 AKID****** 子账号</strong>的那条策略确实含桶根两行。</li>
     <li>策略已对但仍失败：在 GitHub Actions 的 Secrets 确认 <code>TENCENT_COS_SECRET_ID/KEY</code> 填的是<strong>子账号</strong>密钥（主账号密钥已禁用）。</li>
     <li>不确定改对了没：把 CAM 里该策略的 JSON 贴给我，我帮你核对。</li>
   </ul>
