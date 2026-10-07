@@ -114,7 +114,7 @@
     <p>GitHub 的 <code>schedule</code> 官方定位就是<b>"尽力而为"</b>：可能延迟 10~30 分钟，也可能<b>直接被丢弃且无任何通知</b>。若要"每天必须出摊"，最稳的是<b>用外部定时器调用 GitHub API 触发</b>。</p>
   </div>
   <div class="step"><div class="n">1</div><div class="b">GitHub → 头像 → <b>Settings → Developer settings → Personal access tokens → Fine-grained tokens</b>，创建一枚 token，仅授权本仓库，权限勾 <b>Actions: Read and write</b>。<br><small style="color:var(--mut)">（经典 token 也可，勾 <code>workflow</code> scope）</small></div></div>
-  <div class="step"><div class="n">2</div><div class="b">在本机 Windows「任务计划程序」建一个每天 <b>08:30</b> 的任务，运行下面脚本：</div></div>
+  <div class="step"><div class="n">2</div><div class="b">在本机 Windows「任务计划程序」建一个每天 <b>08:30</b> 的任务，运行仓库里已备好的 <code>scripts/trigger-daily.ps1</code>（等效脚本见下）：</div></div>
   <pre># trigger-daily.ps1  —— 调用 GitHub API 触发 workflow_dispatch
 $token = "把 PAT 填这里或设成环境变量 GH_PAT"
 $repo  = "zhencnli/energy-daily-aidabuli"
