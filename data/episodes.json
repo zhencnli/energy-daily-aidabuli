@@ -44,5 +44,18 @@
     "duration_sec": 2190.312,
     "image": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/meta/energy-ai-2026-10-07-cover.png",
     "wav_url": null
+  },
+  {
+    "date": "2026-10-08",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-08｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "谷歌与Constellation签署20年PPA，支持11座PJM核电机组升级，投资43亿美元、到2032年底新增890MW；亚马逊在英国清洁能源投入39亿美元，可再生能源组合突破1GW。风电方面，Cadeler完成波兰首个海上风电场Baltic Power全部76台、1.2GW风机安装；德国Schipkau竖立叶尖高365米的“世界最高”风机。数据中心正重塑电力采购：芬兰数据中心已超制造业成为最大电力买家，最大单笔PPA达507MW；中国在能源富集的内陆地区加速建设AI数据中心；Eos与谷歌合作把锌电池带入数据中心UPS。光伏方面，Clearway在密苏里开建650MW Swan项目。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-08.mp3",
+    "length": 1780606,
+    "duration_hms": "04:02",
+    "duration_sec": 242.2,
+    "image": null,
+    "wav_url": null
   }
 ]
