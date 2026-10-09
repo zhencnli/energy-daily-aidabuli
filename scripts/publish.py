@@ -224,6 +224,12 @@ def render_rss(cfg, episodes, env):
     cover_url = f"{base}/{cfg['cos']['key_cover']}"
     site = p.get("website") or feed_url
     cols = cfg.get("columns", {}) or {}
+    # 小宇宙官方节目名片：注入到频道 description / itunes:summary，便于客户端/ RSS 读者直达
+    xy = p.get("xiaoyuzhou_namecard")
+    desc = p.get("description", "")
+    if xy:
+        desc = desc + ("\n\n收听渠道：Apple Podcasts · 小宇宙（节目名片 %s）· 任意泛用型播客 App 直贴 RSS 订阅。"
+                       % xy)
 
     by_date = sorted(episodes, key=lambda e: e["date"], reverse=True)
     n = len(by_date)
@@ -270,10 +276,10 @@ def render_rss(cfg, episodes, env):
     <link>{esc(site)}</link>
     <language>{p.get('language', 'zh-cn')}</language>
     <copyright>{esc(p.get('copyright', ''))}</copyright>
-    <description><![CDATA[{p.get('description', '')}]]></description>
+    <description><![CDATA[{desc}]]></description>
     <itunes:author>{esc(p.get('author', ''))}</itunes:author>
 {_sub}
-    <itunes:summary><![CDATA[{p.get('description', '')}]]></itunes:summary>
+    <itunes:summary><![CDATA[{desc}]]></itunes:summary>
     <itunes:owner>
       <itunes:name>{esc(p.get('owner_name', p.get('author', '')))}</itunes:name>
       <itunes:email>{esc(p.get('email', ''))}</itunes:email>
