@@ -83,5 +83,18 @@
     "duration_sec": 321.9,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-11",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-11｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日头条：全球单机容量最大16兆瓦漂浮式海上风电项目在广东阳江投运，由中交三航局承建。海外方面，西班牙Grenergy完成4.57亿美元融资，用于智利446MW光伏与1.8GWh储能项目；美国灵活能源平台Voltus完成2.25亿美元D轮，核能初创Atlas Atomics融资4亿美元。国内，怡咖电力在黄山开工1.5亿元零碳园区项目，含5MW/20MWh长时储能，预计2027年投运。AIDC热度不减：英伟达预计10月季度营收1080亿美元、同比增89%，市值近6万亿美元；新泽西州Kenilworth居民则抗议CoreWeave在建的18亿美元AI数据中心。光伏制造端，塔塔电力旗下TP Solar二季度产出1GW组件、0.9GW电池。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-11.mp3",
+    "length": 2372750,
+    "duration_hms": "05:40",
+    "duration_sec": 340.8,
+    "image": null,
+    "wav_url": null
   }
 ]
