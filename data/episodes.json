@@ -96,5 +96,18 @@
     "duration_sec": 340.8,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-12",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-12｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日核心看点：①四川风光新能源规划开发总量超2.89亿千瓦，“十五五”时期规划新增集中式风光超4000万千瓦，电力现货市场以15分钟为一个交易单元、一天形成96个价格信号，中长期合同电量约占85%至90%；②山东青岛启动375MW/783MWh台区储能招标，覆盖约3000个台区，EPC限价单价1.2元/Wh；③印度风电企业Suzlon计划投资约55亿卢比（550 crore），在古吉拉特、卡纳塔克、泰米尔纳德建3座AI驱动叶片工厂，2027年投产，预计带来约1.5万个直接与间接就业；④振华重工联合体拟以8696万元中标中广核嵊泗1#海上风电升压站工程；⑤美国ITC就AI服务器供电系统专利对富士康、立讯、广达等20家企业发起调查，立讯称预计无重大影响。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-12.mp3",
+    "length": 2157399,
+    "duration_hms": "05:04",
+    "duration_sec": 304.9,
+    "image": null,
+    "wav_url": null
   }
 ]
