@@ -109,5 +109,18 @@
     "duration_sec": 304.9,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-14",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-14｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日焦点集中在电池与锂供应链：国轩高科摩洛哥电池工厂进入设备调试，首期投资约13亿美元、规划产能20GWh，调试自10月20日当周启动；托克与EnergyX签下十年期、价值超20亿美元的锂供应协议，涉及10万吨电池级锂产品。政策与市场层面，算电协同研究提出国家枢纽节点新建算力中心绿电占比须≥80%，「十五五」算力用电年均新增超1000亿千瓦时、2030年约达8000亿千瓦时；美国方面，特朗普政府再次请求法院重审Ørsted的Revolution Wind项目COP，而该项目已完成建设、进入调试尾声。项目与订单端，Kongsberg Maritime获IWS Fleet四艘CSOV设计与集成合同（订单约3亿美元），energyRe完成8.15亿美元南卡罗来纳光伏融资（25年PPA），Aker Solutions拿下挪威Nes水电站改造（装机增加80MW）。此外，上海印发节能降碳与循环经济「十五五」规划，鼓励存量燃油小客车更新为新能源车辆；通用汽车推进LMR方形电池量产并引入韩国供应商。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-14.mp3",
+    "length": 2324173,
+    "duration_hms": "05:32",
+    "duration_sec": 332.7,
+    "image": null,
+    "wav_url": null
   }
 ]
