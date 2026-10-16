@@ -122,5 +122,18 @@
     "duration_sec": 332.7,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-16",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-16｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "AEP 拟投约 40 亿美元在怀俄明州建设 702MW 的 Bloom Energy 燃料电池电站并向谷歌售电，另签最多 1.6GW Mainspring 线性发电机协议；NERC 面向数据中心、AI 与加密货币负荷的可靠性标准通过最终投票，将提交董事会与 FERC；美国 ITC 认定印度、印尼、老挝晶硅光伏电池造成实质损害，双反税令即将落地；吉林省“十五五”新基建规划要求新建及改扩建算力设施绿电占比超 80%、PUE 低于 1.25；中国自 2027 年 4 月 1 日起将出口电动车增值税退税由 13% 下调至 9%。风电方面，DEME 拿下荷兰 Zeevonk 约 1GW 项目 69 台风机安装合同，金额 5600 万至 1.68 亿美元。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-16.mp3",
+    "length": 2340750,
+    "duration_hms": "05:35",
+    "duration_sec": 335.4,
+    "image": null,
+    "wav_url": null
   }
 ]
