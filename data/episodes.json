@@ -135,5 +135,18 @@
     "duration_sec": 335.4,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-17",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-17｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日主线三条。一是政策面：商务部与科技部联合发布草案，拟对 14 项技术实施出口禁令、另 26 项技术面临新的出口限制，合计 40 项，横跨人工智能、生物技术、芯片与光伏，含生产特定太阳能电池组件的技术，商务部称此举“必要”并援引国家安全。二是 AIDC 供能：美国能源部提供最高 44 亿美元贷款，重启密歇根 Palisades、宾州三里岛 Crane Clean Energy Center 与爱荷华 Duane Arnold 三座核电站，合计恢复 2.25 吉瓦，可供约 200 万户家庭与企业用电，其中两座已与大型科技公司签约。三是储能与电网：南网储能丽江华坪 5MW/20MWh 全钒液流项目由大连融科联合体中标，限价 3622.9096 万元（1.8115 元/Wh），中标报价低约 6.2%；山西阳泉“锂电+飞轮”独立调频储能总投资约 6.985 亿元；美国 PJM 夏季峰值 162.6GW、SPP 58.0GW 均创新高。风电侧，金风科技发布 GoldFusion+，远景发布 AI 风储一体机，功率 125—2520kW。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-17.mp3",
+    "length": 2584065,
+    "duration_hms": "06:15",
+    "duration_sec": 375.9,
+    "image": null,
+    "wav_url": null
   }
 ]
