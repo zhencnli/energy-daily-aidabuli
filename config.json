@@ -6,13 +6,13 @@
     "subtitle": "新能源 风光储 · 电力市场 · 商业模式 · AI Harness / MCP / Ontology",
     "author": "老锂",
     "email": "aidabuli@agent.qq.com",
-    "description": "一个新能源十年从业者，一个AI-native博客。\n*仅代表个人观点，不构成投资参考。\n**博客内容均为人与AI协同创作，涉及引用均作标注，侵删。",
+    "description": "一个新能源十年从业者，一个AI-native博客。",
     "language": "zh-cn",
     "category": "Business",
     "subcategory": "Investing",
     "explicit": "false",
     "owner_name": "老锂",
-    "website": "https://aili-1500638180.cos-website.ap-shanghai.myqcloud.com/",
+    "website": "https://aidabuli.podcast.xyz/",
     "copyright": "老锂 · AI答不锂",
     "xiaoyuzhou_namecard": "https://namecard.xiaoyuzhoufm.com/jagrf"
   },
@@ -26,14 +26,14 @@
   },
   "columns": {
     "brief": {
-      "label": "Energy Daily · 每日简报",
-      "title_prefix": "Energy Daily · ",
+      "label": "Brief: Energy Daily",
+      "title_prefix": "Brief: Energy Daily · ",
       "itunes_category": "Business",
       "itunes_subcategory": "Investing"
     },
     "insight": {
-      "label": "Energy +AI · 深度洞察",
-      "title_prefix": "Energy +AI · ",
+      "label": "Insight: Energy +AI",
+      "title_prefix": "Insight: Energy +AI · ",
       "itunes_category": "Technology",
       "itunes_subcategory": "Tech News"
     }

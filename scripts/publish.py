@@ -216,6 +216,28 @@ def hms(sec):
     return f"{sec // 60:02d}:{sec % 60:02d}"
 
 
+# 历史标题前缀（用于幂等剥离，避免重复叠加）
+_KNOWN_TITLE_PREFIXES = (
+    "Brief: Energy Daily · ",
+    "Insight: Energy +AI · ",
+    "Energy Daily · ",
+    "Energy +AI · ",
+)
+
+
+def display_title(raw, col_cfg):
+    """按栏目补全标题前缀（幂等）：先剥离历史前缀，再统一加当前栏目前缀。"""
+    t = (raw or "").strip()
+    for pfx in _KNOWN_TITLE_PREFIXES:
+        if t.startswith(pfx):
+            t = t[len(pfx):].strip()
+            break
+    prefix = col_cfg.get("title_prefix") or ""
+    if prefix and not prefix.endswith(" "):
+        prefix += " "
+    return f"{prefix}{t}" if prefix else t
+
+
 def render_rss(cfg, episodes, env):
     p = cfg["podcast"]
     base = public_base(cfg, env) or "https://example.com"
@@ -224,12 +246,8 @@ def render_rss(cfg, episodes, env):
     cover_url = f"{base}/{cfg['cos']['key_cover']}"
     site = p.get("website") or feed_url
     cols = cfg.get("columns", {}) or {}
-    # 小宇宙官方节目名片：注入到频道 description / itunes:summary，便于客户端/ RSS 读者直达
-    xy = p.get("xiaoyuzhou_namecard")
+    # 节目简介严格取自 config.podcast.description（不再自动追加收听渠道文案）
     desc = p.get("description", "")
-    if xy:
-        desc = desc + ("\n\n收听渠道：Apple Podcasts · 小宇宙（节目名片 %s）· 任意泛用型播客 App 直贴 RSS 订阅。"
-                       % xy)
 
     by_date = sorted(episodes, key=lambda e: e["date"], reverse=True)
     n = len(by_date)
@@ -244,12 +262,16 @@ def render_rss(cfg, episodes, env):
         sub = col_cfg.get("itunes_subcategory") or p.get("subcategory", "")
         item_cat = f'    <itunes:category text="{esc(cat)}"/>' + (
             f'\n      <itunes:category text="{esc(sub)}"/>' if sub else "")
+        disp_title = display_title(e.get("title", ""), col_cfg)
+        col_label = col_cfg.get("label") or col
         items.append(f"""    <item>
-      <title>{esc(e['title'])}</title>
+      <title>{esc(disp_title)}</title>
+      <category>{esc(col_label)}</category>
       <description><![CDATA[{e.get('summary', '')}]]></description>
       <itunes:summary><![CDATA[{e.get('summary', '')}]]></itunes:summary>
       <itunes:subtitle>{esc(e.get('subtitle', '新能源每日播报'))}</itunes:subtitle>
       <aili:column>{esc(col)}</aili:column>
+      <itunes:keywords>{esc(col_label)}</itunes:keywords>
       <enclosure url="{esc(rewrite_host(e['url'], origin, base))}" length="{e.get('length', 0)}" type="{guess_enclosure_type(e['url'])}"/>
       <itunes:image href="{esc(img)}"/>
       <guid isPermaLink="false">energydaily-{e['date']}-{esc(col)}</guid>

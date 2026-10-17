@@ -98,6 +98,19 @@
     "wav_url": null
   },
   {
+    "date": "2026-10-11",
+    "column": "insight",
+    "title": "0.403 元/Wh：宁德时代挂上货架的是一把尺",
+    "subtitle": "定价权：从闭门博弈走向单点辐射",
+    "summary": "01 03:58 它说明宁德挂的不是市场价，而是我认为我值多少钱。\n02 05:24 二线失去的不是一两分钱的价差，是我为什么便宜的解释权，也就是定价的合法性来源。\n03 07:36 二线的死穴不是贵，是没有账可算。\n04 08:38 生死线不在一线还是二线，在非价格分项能不能凑出及格分。\n05 12:34 条款话语权，就是宁德和二线中间那条分水岭。\n06 17:20 参照系是顺周期放大器：牛市锁利，熊市锁死。\n07 20:40 这不是新现象，产业组织文献八十年前就写好了剧本。\n08 27:08 当挂牌与成交长期脱钩，锚不是被对手打破的，是被龙头自己废弃的。\n09 35:36 公开锚是一笔卖出的期权。平时收权利金，也就是溢价；伤害面扩大时赔付非线性上升。\n10 50:13 在龙头已经把参照系公开的世界里，二线唯一能做的，不是去砸那把尺，而是在尺子量不到的地方，建一把自己的尺。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energy-ai-2026-10-11.mp3",
+    "length": 11082238,
+    "duration_hms": "44:46",
+    "duration_sec": 2686.356,
+    "image": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/meta/energy-ai-2026-10-11-cover.png",
+    "wav_url": null
+  },
+  {
     "date": "2026-10-12",
     "column": "brief",
     "title": "Energy Daily · 2026-10-12｜今日新能源头条",
@@ -147,6 +160,19 @@
     "duration_hms": "06:15",
     "duration_sec": 375.9,
     "image": null,
+    "wav_url": null
+  },
+  {
+    "date": "2026-10-17",
+    "column": "insight",
+    "title": "0.403：宁德时代挂上货架的是一把尺",
+    "subtitle": "Energy +AI · 深度洞察",
+    "summary": "",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energy-ai-2026-10-17.mp3",
+    "length": 11082238,
+    "duration_hms": "44:46",
+    "duration_sec": 2686.356,
+    "image": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/meta/energy-ai-2026-10-17-cover.png",
     "wav_url": null
   }
 ]
