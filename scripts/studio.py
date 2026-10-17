@@ -231,11 +231,9 @@ class StudioApp:
         self._tts_log_msg(f"完成：{res.get('out_path')}")
         self._tts_log_msg(f"时长 {res.get('duration_hms')}（{d:.0f}秒），字数 {res.get('chars')}，分段 {res.get('segments')}")
         if d < 1200:
-            self._tts_log_msg("⚠️ 时长不足 20 分钟，建议补充稿件。")
-        elif d > 2400:
-            self._tts_log_msg("⚠️ 时长超过 40 分钟，建议精简。")
+            self._tts_log_msg("⚠️ 时长不足 20 分钟，稿件偏短，可视情况补充。")
         else:
-            self._tts_log_msg("✅ 时长落在 20–40 分钟区间。")
+            self._tts_log_msg(f"✅ 时长 {d // 60:.0f} 分钟，已就绪（无时长上限）。")
         self.tts_pub.configure(state="normal")
 
     def _tts_to_publish(self):
