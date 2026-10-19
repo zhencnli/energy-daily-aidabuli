@@ -187,5 +187,18 @@
     "duration_sec": 372.0,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-19",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-19｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今天最核心的一条来自政策面：商务部拟将12项光伏制造技术列入出口管制清单，理由是相关技术正越来越多用于航空航天、国防等敏感领域。资金面，美国 Pivot Energy 完成1.73亿美元定期贷款，对应六个州51个社区级光伏项目、合计135兆瓦。数据中心方面，微软终止参与 Nscale 在英国的20亿英镑AI数据中心项目；美国副总统万斯以「电费纳税人保护承诺」要求数据中心做「好公民」；Meta 近1000万平方英尺的 Hyperion 项目正在路易斯安那施工，并带动本地职业培训。电网侧，MISO 220亿美元远距离输电组合的投诉被质疑缺乏公众参与；国内哈密—重庆±800千伏特高压渝北换流站累计接收电量突破400亿千瓦时。另有两则值得留意：印度 NTPC 与 247Solar 签署25年光热购电协议；Blencowe 为其乌干达石墨寻找军用电池应用。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-19.mp3",
+    "length": 2930443,
+    "duration_hms": "07:13",
+    "duration_sec": 433.6,
+    "image": null,
+    "wav_url": null
   }
 ]
