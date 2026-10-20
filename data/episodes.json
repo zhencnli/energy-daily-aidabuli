@@ -200,5 +200,18 @@
     "duration_sec": 433.6,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-20",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-20｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日主线仍是AI算力对电力系统的重塑：施耐德电气三季度有机收入增长17%至115亿欧元、创单季纪录，数据中心相关需求连续实现三位数增长；Google在PJM资助100兆瓦虚拟电厂，其明尼苏达780兆瓦数据中心方案拟配套更多风光储。国内方面，新疆2.5吉瓦大基地首批1吉瓦风机定标，金风、远景各获500兆瓦，单价1632元/千瓦；国家电投将20亿元储能交易内化至上市平台中国电力；红海湾三、四海上风电集中送出工程EPC第一候选人报价约19亿元。海外，AEP联合亚马逊与X-energy在印第安纳州探索960兆瓦先进核电，欧盟委员会以34亿欧元支持77个净零技术项目。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-20.mp3",
+    "length": 2101615,
+    "duration_hms": "04:55",
+    "duration_sec": 295.6,
+    "image": null,
+    "wav_url": null
   }
 ]
