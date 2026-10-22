@@ -226,5 +226,18 @@
     "duration_sec": 348.5,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-22",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-22｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日核心线索是“政策不确定性”与“AI用电扩张”并行。美国海上风电许可风波升级：司法部数日内第四次请求法院将海上风电项目建设运营计划发回内政部重审，参议员Whitehouse称针对海上风电的行动危及两党许可协议；五角大楼新安全要求又被行业组织指为令项目“不可行”。AI数据中心方面，Nvidia发布DSX POD，称Vera Rubin参考架构同产出最多省电30%、冷却用水最多减少100%，欧洲伙伴已采用；特朗普称大型数据中心应自发电并向社区分红；Cleveland将数据中心暂停令延长至2027年1月29日。价格与制造端，美国Q3光伏PPA价格上涨5%，风电PPA同比涨13.8%、较2024年涨27.5%；欧盟创新基金以34亿欧元支持77个净零项目，含HoloSolis 5GW法国光伏厂；印度Sahaj Solar拟投INR 25 crore建1.8 GWh BESS。中国企业对摩洛哥电池供应链投资US$6 billion；国内氢能周报显示全球最大绿色氢氨醇一体化项目二期开工、发改委警示投资热。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-22.mp3",
+    "length": 2479993,
+    "duration_hms": "05:58",
+    "duration_sec": 358.6,
+    "image": null,
+    "wav_url": null
   }
 ]
