@@ -239,5 +239,18 @@
     "duration_sec": 358.6,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-23",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-23｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "政策层面出现两条主线：美国司法部向联邦法院提交动议，要求撤销内政部此前批准的多个海上风电建设和运营计划，涉及 2.2 GW Maryland Offshore Wind、2.6 GW New England Wind 和 700 MW Revolution Wind；后者已完成海上施工，并自 3 月起向新英格兰电网送电。参议员 Whitehouse 称，这等于「把一份许可协议炸掉」。同时，土地管理局取消西部七州光伏与风电输电走廊的环境审查。技术与产业方面，英飞凌与英伟达在 GTC Berlin 宣布，双方将合作开发面向 800VDC 架构的氮化镓功率转换技术，其中中间母线转换器的开关频率达 1MHz。企业表现冷热不均：德国户储厂商 Sonnen 申请破产，约 400 名员工受到影响，但 Sonnen USA 美国销售同比翻倍，预计年内出货超过 180MWh；印度 Indosolar 第二季度净利润同比下降 89.17%。国内储能招投标保持较高活跃度，张家口 200MW/800MWh 项目包含 20MW/80MWh 钠离子电池，兰州 100MW/400MWh 项目中标单价为 1.02 元/Wh。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-23.mp3",
+    "length": 2957110,
+    "duration_hms": "07:18",
+    "duration_sec": 438.0,
+    "image": null,
+    "wav_url": null
   }
 ]
