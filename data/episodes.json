@@ -252,5 +252,18 @@
     "duration_sec": 438.0,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-24",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-24｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日最值得关注的是国内政策与海外投资同时加码：川渝方案提出到2027年可再生能源发电装机比重达到75%，以水电和新能源为双主体；印度计划投入30万亿卢比，投向可再生能源、火电与储能。制造端，Vikram Solar位于泰米尔纳德邦的9GW N型TOPCon电池厂计划2026年12月产出首片；国内罗平山高海拔风电项目完成10.5MW风机吊装。创新与资本端，Optivolt完成3200万美元A轮，CFS获美国8500万美元CHIPS法案支持。企业采购与AIDC方面，亚马逊以10亿欧元押注Offaly能源园区，具体合同为105MW风电PPA；巴拉圭AI设施将接入Itaipú水电。供应链与储能端，GM取消与VAC稀土磁体长期供应协议并进入仲裁，Energy Fuels此前同意以19亿美元收购VAC；Saft将成法国首家可室温生产硫化物和聚合物电解质固态电池的制造商。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-24.mp3",
+    "length": 2233651,
+    "duration_hms": "05:17",
+    "duration_sec": 317.6,
+    "image": null,
+    "wav_url": null
   }
 ]
