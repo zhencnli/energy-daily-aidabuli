@@ -265,5 +265,18 @@
     "duration_sec": 317.6,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-25",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-25｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日两条主线。一是光伏制造门槛抬升：工信部就《光伏制造行业规范条件（2026年本）》征求意见，拟要求新建及改扩建产线平均电池效率不低于 TOPCon 26.2%、HJT 26%、BC 26.6%，组件效率分别不低于 24.2%、24%、24.4%；海外侧，INA Solar 与 Caelux 签五年合作，商业化 3 GW 钙钛矿-TOPCon 叠层组件，目标 2028 年效率达 29%。二是 AI 数据中心的「账」被反复审视：Bernstein 分析数千个美国规划项目后认为，仅约 35% 已宣布容量可能落地；英伟达为 neocloud 提供的表外 AI 云协议规模达 360 亿美元，并为俄亥俄拟建 10 GW OpenAI 数据中心提供最高 1050 亿美元担保；CNBC 全美经济调查显示，仅 29% 受访者支持在住宅 10 英里内建数据中心。另有估算称 2032 年美国数据中心容量将达 183 GW。国内，云南新能源重卡用电量增长 500%，规划建设 82 座重卡充换电站。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-25.mp3",
+    "length": 2267381,
+    "duration_hms": "05:23",
+    "duration_sec": 323.2,
+    "image": null,
+    "wav_url": null
   }
 ]
