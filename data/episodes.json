@@ -278,5 +278,18 @@
     "duration_sec": 323.2,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-26",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-26｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "过去24小时，主线是「AI的电力账单」。CNN报道，为缓解北弗吉尼亚数据中心聚集区的电力短缺，多条大型输电线路需穿过数百英里外的社区；Energy News Beat 沿PJM容量拍卖、Dominion输电附加费与FERC规则追问「谁来为电线买单」，其中弗吉尼亚州公司委员会把2026年输电附加费对1000千瓦时家庭月账单的影响从2.90美元降至0.94美元。POLITICO民调显示，50%的美国人反对在自家三英里内建数据中心，接近1月28%的两倍；47%更愿支持反对本地数据中心的民主党候选人。政策端，CleanTechnica 梳理特朗普政府2027财年DOE预算请求，光伏、风电、车辆与建筑相关项目从10.05亿美元降至4000万美元，降幅约96%。国内，湖北印发新型能源体系建设「十五五」规划，提出2030年能源综合生产能力达7000万吨标准煤。行业出清方面，一项研究称2022年1月至2026年10月21日，至少91家美国户用光伏相关企业破产、停业或退出。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-26.mp3",
+    "length": 2548894,
+    "duration_hms": "06:10",
+    "duration_sec": 370.1,
+    "image": null,
+    "wav_url": null
   }
 ]
