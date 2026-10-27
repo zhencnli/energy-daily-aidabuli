@@ -291,5 +291,18 @@
     "duration_sec": 370.1,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-27",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-27｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日国内政策与海外投资两条主线突出。湖北发布新型能源体系“十五五”规划，明确到2030年新型储能装机800万千瓦、电网侧独立新型储能新增力争200万千瓦、虚拟电厂调节能力500万千瓦。海外方面，印度Jakson Solar拟投至多5.252亿美元，建设各3GW太阳能电池与硅片产能；Scatec与EBRD设立5.5亿美元埃及能源平台，EBRD最高出资2.21亿美元占40%；Masdar收购希腊超550MW光伏项目。AIDC侧，Tata Communications计划投资近4.5亿美元，在印度建设约1万公里AI光纤超级高速公路。风电侧，苍南6号300MW海上风电电网接入专题中标，三峡如东800MW项目获国家优质工程金奖。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-27.mp3",
+    "length": 1867525,
+    "duration_hms": "04:16",
+    "duration_sec": 256.6,
+    "image": null,
+    "wav_url": null
   }
 ]
