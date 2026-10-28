@@ -304,5 +304,18 @@
     "duration_sec": 256.6,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-28",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-28｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "美国第14421号行政令的风险进一步显现：如果能源部以国家安全为由推进规则制定，理论上可全面禁止中国制造的输电网设备。印度光伏“产能跑在需求和电池片前面”，组件名义产能超230吉瓦，但开工率仅35%—40%，电池片产能约35—37吉瓦；与此同时，Sigenergy 仍规划40吉瓦印度基地，首期2027年二季度投产。印度 TARIL 投资1250 crore卢比，新建三座高压变压器零部件工厂。国内方面，湖北“十五五”能源规划提出2030年新型储能装机达8吉瓦，并推进“算电协同”。海外，澳大利亚智能能源理事会警告数据中心或推高电力成本400亿澳元；Verizon 签署410兆瓦可再生能源购电协议；福特平价电动皮卡 Fathom 把家用备电逆变器集成进整车。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-28.mp3",
+    "length": 2587236,
+    "duration_hms": "06:16",
+    "duration_sec": 376.5,
+    "image": null,
+    "wav_url": null
   }
 ]
