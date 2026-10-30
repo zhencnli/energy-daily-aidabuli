@@ -330,5 +330,18 @@
     "duration_sec": 374.9,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-30",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-30｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日主线是政策目标与电网投资同步加码。北京印发“十五五”新型能源体系规划，提出新增光伏180万千瓦、风电20万千瓦、新型储能60万千瓦，新建算力中心100%使用绿电，存量数据中心PUE降至1.35以下。美国方面，AEP将五年资本计划提高30%至1000亿美元，合同大负荷达84GW；DOE为Alliant完成51亿美元联邦担保贷款，支持超过2.6GW气电与储能容量；FirstEnergy数据中心管道增至26GW。制造端，SEG Solar推进9.5亿美元4GW HJT电池厂，Group14完成1.5亿欧元D轮扩展，宁德时代钠电储能新签3GWh、在手订单达70GWh。市场端，西班牙独立光伏PPA降至30.93欧元/MWh，混合储能合同为48欧元/MWh。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-30.mp3",
+    "length": 2295633,
+    "duration_hms": "05:27",
+    "duration_sec": 327.9,
+    "image": null,
+    "wav_url": null
   }
 ]
