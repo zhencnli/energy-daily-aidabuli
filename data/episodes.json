@@ -343,5 +343,18 @@
     "duration_sec": 327.9,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-10-31",
+    "column": "brief",
+    "title": "Energy Daily · 2026-10-31｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "国家能源局发布会披露，全国储能装机已达167GW/435GWh，前三季度全国电力市场交易电量58536亿千瓦时、同比增长18.9%，绿证核发26.5亿个、同比增长23.61%。海上风电同日有两项进展：汕尾红海湾三、四海风集中送出EPC以19.02亿元定标，装机504MW、采用28台18MW机组；广西钦州海上风电示范项目获批，中船海装、明阳智能、远景能源三家整机商三种机型混排。海外方面，Xcel Energy公布700亿美元五年资本计划，包含9.2GW可再生能源与2.3GW储能；First Solar三季度净销售额12.3亿美元、同比下降23%，签约组件在手订单44GW并下调全年指引。AIDC用电侧，Alliant Energy计划六个月内签署约1GW数据中心需求合同，NERC拟对总连接负荷不低于50MW的大型计算负荷站点实施联邦可靠性注册。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-10-31.mp3",
+    "length": 2229615,
+    "duration_hms": "05:16",
+    "duration_sec": 316.9,
+    "image": null,
+    "wav_url": null
   }
 ]
