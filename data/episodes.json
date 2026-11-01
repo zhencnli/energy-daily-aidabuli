@@ -356,5 +356,18 @@
     "duration_sec": 316.9,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-01",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-01｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "国家能源局10月30日发布会披露，前三季度电网、新型储能、充换电基础设施投资合计同比增15.3%，氢能投资完成额同比翻一番；截至9月底电网企业固定资产投资超6000亿元、完成全年预计的三分之二，累计建成在运25条特高压直流通道、输电能力超3.4亿千瓦，充电设施超2400万个、支撑超5100万辆新能源汽车。海外，AI数据中心在争议中继续扩张：Axios称全美已有300多个地方暂停令，SemiAnalysis预计2027年新增超50吉瓦容量；中期选举期间数据中心相关广告支出达1.73亿美元、几乎全为负面，约20个社区将在下周就限制建设投票。企业端，CleanSpark签署20年、66亿美元AI数据中心三净租约；标普将Meta信用展望下调至负面。光伏方面，TOYO埃塞俄比亚产电池片获美国海关放行，LevelTen数据显示三季度光伏PPA价格环比涨5%。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-01.mp3",
+    "length": 2727633,
+    "duration_hms": "06:39",
+    "duration_sec": 399.8,
+    "image": null,
+    "wav_url": null
   }
 ]
