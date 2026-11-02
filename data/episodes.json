@@ -369,5 +369,18 @@
     "duration_sec": 399.8,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-02",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-02｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "储能：国家能源局10月30日发布会通报，截至2026年9月底全国新型储能累计装机1.67亿千瓦/4.35亿千瓦时，同比增63%，平均储能时长升至2.61小时，并同步解读算电协同。风电：远景以10.72亿元、3299元/kW预中标华电灌云325MW海上风电；华电3GW风机框采启动，混塔入框、6-8MW为主力。AIDC：OpenAI确认把AI数据中心改称「算力园区」，Pew民调显示54%美国人认为AI数据中心对环境不利；Hammond Power Solutions三季度销售额4.46亿美元、同比增104%，主因数据中心需求。电力结构：印度10月煤电发电量同比增25.7%、占比升至71.7%，可再生能源发电量增34.7%、其中光伏增62%。中国高海拔地区新能源装机达5.28亿千瓦，占全国25.6%。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-02.mp3",
+    "length": 2431128,
+    "duration_hms": "05:50",
+    "duration_sec": 350.5,
+    "image": null,
+    "wav_url": null
   }
 ]
