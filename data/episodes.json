@@ -382,5 +382,18 @@
     "duration_sec": 350.5,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-03",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-03｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日核心看点集中在风电与AIDC两条主线。明阳智能前三季度亏损9.83亿元，但国家能源局数据显示，截至2026年9月底全国风电累计并网容量达7亿千瓦，同比增长20.4%，前三季度新增并网6066万千瓦。海外方面，韩国启动2026年下半年海上风电固定电价招标，为去年6月发布中长期招标路线图后的首次。AIDC方面，OpenAI推出Grid Protectors，佐治亚州3.2GW园区为试点，电网繁忙时最多可削减1000MW，并承诺直接开发园区在紧急情况下最多削减1GW。国内产业侧，上海电气集团山东区域总部启动，推介海上风电与光储协同等方向；财闻网称美国取消对等关税及双反税，锂电产业链海外出口迎实质性利好。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-03.mp3",
+    "length": 2250228,
+    "duration_hms": "05:20",
+    "duration_sec": 320.4,
+    "image": null,
+    "wav_url": null
   }
 ]
