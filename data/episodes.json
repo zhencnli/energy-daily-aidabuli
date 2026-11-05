@@ -408,5 +408,18 @@
     "duration_sec": 72.8,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-05",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-05｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "美国中期选举结果落地，民主党夺取国会控制权，清洁能源股集体走强：First Solar 涨 7%、Sunrun 涨 6.1%、Enphase 涨 3.6%，欧洲 Vestas 涨 4.3%、Orsted 涨 6.4%，而数据中心相关股票盘前下挫，市场预期 AI 扩张将面临更严格审视。制造与电网端，GE Vernova 宣布以 90 亿美元从 Triton Partners 手中收购高压电网设备商 Trench Group，垂直整合其电网系统集成与电力传输两大业务。印度内阁批准 281.4 亿卢比（约 2.97 亿美元）锂、镍加工激励政策，以降低对中国主导供应链的依赖；印度太阳能制造商协会发布 Vision 2047 报告，提出到 2047 年吸引 890 亿美元光伏制造投资、创造 323 万个直接与间接岗位。需求侧，新加坡推出五年能源基础设施计划，应对十年内峰值用电最多增长 50%；美国亚利桑那公用事业 APS 预计 15 年内零售售电翻倍，将四角煤电厂延寿至 2038 年，并在 2029 年前新增 2000 兆瓦光伏与 2500 兆瓦储能。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-05.mp3",
+    "length": 2196894,
+    "duration_hms": "05:11",
+    "duration_sec": 311.5,
+    "image": null,
+    "wav_url": null
   }
 ]
