@@ -434,5 +434,18 @@
     "duration_sec": 355.1,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-07",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-07｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "IEA预计2026—2031年全球新增可再生装机近4800GW，2031年可再生发电占比接近45%；美国中期选举后，多州和地方公投转向限制数据中心扩建，AIDC的电力与许可风险上升；中天科技海缆预中标欧洲高压海缆项目，金额超12亿元；三峡南疆近4GW风电项目启动风机招标，机型叶轮直径220米以上；6K获美国防部2.5亿美元有条件贷款建正极材料厂，美国DLA另承诺20亿美元采购关键材料充实国防储备。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-07.mp3",
+    "length": 1931669,
+    "duration_hms": "04:27",
+    "duration_sec": 267.3,
+    "image": null,
+    "wav_url": null
   }
 ]
