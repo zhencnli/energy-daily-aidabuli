@@ -460,5 +460,18 @@
     "duration_sec": 364.6,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-09",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-09｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日几条主线。海外海上风电与国内海风同步升温：华东院连中三标、金额超1亿元，其中华润响水项目总装机308MW，拟安装28台11MW机组。AI 侧的电力焦虑开始变成真金白银：据金融时报报道，Anthropic 以约34亿美元锁定1.7GW天然气发电机组，从圣安东尼奥的 OnePWR Solutions 购得，路透社称暂未能立即核实；IREN 的97亿美元AI项目则因微软要求的网络变更延期。储能方面，陕西有色金属集团所属西勘院承建的山东高速 2.7MW/10MWh 全钒液流电池项目现场布设30套储能预制舱。关键矿产博弈继续：巴西11月5日敲定27种关键矿产并分三个优先组；加蓬拟以20亿美元重启 Mabounié 稀土铌项目；美国方面，USA Rare Earth 与商务部的16亿美元交易、Vulcan Elements 的6.2亿美元有条件贷款正受到国会审视。此外，美国民主党胜选被认为将重塑能源政策，有分析提到 2026—2031 年近300GW光伏、超212GW储能的装机目标。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-09.mp3",
+    "length": 2546011,
+    "duration_hms": "06:09",
+    "duration_sec": 369.6,
+    "image": null,
+    "wav_url": null
   }
 ]
