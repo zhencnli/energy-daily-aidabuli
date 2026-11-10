@@ -473,5 +473,18 @@
     "duration_sec": 369.6,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-10",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-10｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "过去24小时最值得关注的几条：IEA《Renewables 2026》预测，2026—2031年全球将新增近4800GW可再生能源装机，比上一个六年期高近60%，除中国外的新兴与发展中经济体新增装机将首次与发达经济体持平。国内价格信号方面，本周1.2GW风机开标，海上含塔筒报价3217元/kW，三一、运达、远景、明阳、中船海装5家整机商中标。海上风电项目侧：美国规模最大海上风电项目全面投入运营；芬兰划定四个海上风电开发区并计划开展竞争性招标；另有市场报告援引数据称，2025年全球海上风电新增并网约9.3GW、累计约92.5GW，其中中国新增约6.6GW、欧洲接近2GW。光储方面：Arevon加州Eland项目（758MW光伏+300MW/1200MWh储能）投运并签有25年购电协议；European Energy与AirTrunk在澳大利亚的31MW Mulwala光伏配25MW/100MWh储能已完成满功率测试。国内：中石化山西石油已布局光伏站点220座、光储充一体站2座，售电公司正式运行；2026年10月全国19省市共发布34条储能相关政策。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-10.mp3",
+    "length": 2598480,
+    "duration_hms": "06:18",
+    "duration_sec": 378.3,
+    "image": null,
+    "wav_url": null
   }
 ]
