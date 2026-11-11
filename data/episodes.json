@@ -486,5 +486,18 @@
     "duration_sec": 378.3,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-11",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-11｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日核心信号集中在投资端：据 Oil & Gas 360 报道，中国 2026 年能源开发投资预计约 9400 亿美元，为全球最高，其中电网投资目标约 1400 亿美元；截至 2025 年底，中国可再生电力装机达 23.37 亿千瓦，占总装机 60.1%。储能方面，印度内阁批准 1450 亿卢比（约 15.4 亿美元）补贴，用于建设 92GWh 大型储能；特斯拉在德州 Giga Texas 部署 133MW/266MWh Megapack，为自有 AI 数据中心提供表后备电。制造端，Heliene 与 Caelux 的钙钛矿—晶硅叠层组件在美国进入商业化量产，组件效率最高 27% 以上；中材叶片的超大型叶片技术已覆盖 1.5MW 至 22MW 机组平台。政策端，300 多家光伏与储能企业联名呼吁美国国会通过许可改革，称约 1200 亿美元清洁能源投资受困于审批延迟。另据 BNEF 数据，2025 年亚太新兴市场（除中国大陆）可再生投资超 810 亿美元，印度与巴基斯坦贡献约三分之二增量。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-11.mp3",
+    "length": 2573687,
+    "duration_hms": "06:14",
+    "duration_sec": 374.2,
+    "image": null,
+    "wav_url": null
   }
 ]
