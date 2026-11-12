@@ -499,5 +499,18 @@
     "duration_sec": 374.2,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-12",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-12｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日要点：① IEA《Renewables 2026》称超90%的中国主要光伏制造商报告净亏损，组件价格较2025年已涨10%–30%仍难扭亏，预计到2031年光伏供应链仍高度集中于中国，尤其是多晶硅与硅片；② 印度即日起禁止锂离子电池黑粉出口，推动锂钴镍锰等关键金属本土加工；③ Constellation 推出“Peak+”双边合约，把清洁基荷发电（很可能是核电）与电池储能、需求响应、新增发电打包卖给大客户；④ FT报道民主党威胁叫停数据中心建设，投资者担心AI泡沫，CBRE数据显示2025年底可即用带供电的数据中心空间创20年新低；⑤ 乌拉圭为350MW光伏＋数据中心园区落实用地，总投资57亿美元，其中55亿投向数据中心，配套PPA最长40年。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-12.mp3",
+    "length": 2182912,
+    "duration_hms": "05:09",
+    "duration_sec": 309.1,
+    "image": null,
+    "wav_url": null
   }
 ]
