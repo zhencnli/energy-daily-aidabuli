@@ -525,5 +525,18 @@
     "duration_sec": 363.7,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-14",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-14｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "本期最核心的一条：中国光伏装机在7月底首次超过煤电，成为装机容量最大的电源；2026年上半年可再生能源装机达24.6亿千瓦、占总装机60.7%，部分2030年国家自主贡献目标已提前实现。国内项目侧，协鑫能科与宁德时代旗下时代骐骥合建的“风光换储充”综合能源示范站11月12日在福建宁德投运。海上风电两头有动静：2026年海上风电现代产业链共链行动大会11月11日在南京召开，一台海上风机涉及3万多个零部件；海外方面，SSE Renewables选定西门子能源为苏格兰1.4GW Berwick Bank B项目风机与海上升压站平台首选供应商。AIDC与电力的矛盾继续放大：研究显示美国数据中心用电自2000年以来年均增长19%，电网容量年均仅增2%，占比从0.1%升至5%；AirTrunk与European Energy Australia签独家协议，锁定260MW光伏、超800MWh储能与最多350MW风电。制造端则有T1 Energy把Austin电芯厂投产推迟至2027年中，Q3净销售1.97亿美元；印度10GWh ACC电池储能招标收到22份投标。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-14.mp3",
+    "length": 2285687,
+    "duration_hms": "05:26",
+    "duration_sec": 326.3,
+    "image": null,
+    "wav_url": null
   }
 ]
