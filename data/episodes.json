@@ -551,5 +551,18 @@
     "duration_sec": 321.6,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-16",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-16｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "过去24小时，政策文本压过企业订单：国家发展改革委、国家能源局印发《“十五五”新型储能实施方案》，明确加快锂离子电池储能迭代升级、推广钠离子电池储能应用，并科学布局新型储能创新方向；江西省政府办公厅印发《江西省“十五五”新型能源体系建设规划》，提出到2030年力争初步建成清洁低碳安全高效的新型能源体系，风电、光伏、生物质新增装机合计18GW以上。企业端，中天科技海缆预中标欧洲高压海底电缆项目，金额超12亿元。海外焦点仍在算力与电力的拉扯：数据中心开发商Applied Digital要求Oracle、Meta等租户在签约前提供数十亿美元电力担保，并向英伟达、AMD寻求担保；ComEd首席执行官称手握10GW“高概率”电力订单，老电网的定义需要重写。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-16.mp3",
+    "length": 2628029,
+    "duration_hms": "06:23",
+    "duration_sec": 383.3,
+    "image": null,
+    "wav_url": null
   }
 ]
