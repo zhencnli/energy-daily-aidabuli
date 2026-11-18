@@ -577,5 +577,18 @@
     "duration_sec": 359.0,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-18",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-18｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日头条：Amazon 计划到2030年在印度可再生能源项目投入70亿美元，并新增四个风光项目合计934MW；ReNew 宣布在安得拉邦投资近8000亿卢比，其中6700亿卢比用于1GW可再生能源驱动的超大规模数据中心。美国已投运储能容量突破200GWh，Q3新增14.3GWh。AIDC 风险同时升温：Orennia 称191GW规划数据中心容量面临新风险，哈佛研究测算403座美国超大规模数据中心年耗电约82TWh、排放约2570万吨CO2。制造端，Adani 在印度蒙德拉启动91.2米叶片生产，Waaree 投运5.15GWh电池包产线。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-18.mp3",
+    "length": 2465723,
+    "duration_hms": "05:56",
+    "duration_sec": 356.2,
+    "image": null,
+    "wav_url": null
   }
 ]
