@@ -616,5 +616,18 @@
     "duration_sec": 392.8,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-21",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-21｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "储能端，中铁建系联合体拿下内蒙古清水河2.4GWh独立储能EPC，金额23.9亿元、折合0.9958元/Wh；“光伏装机首超煤电”带动万亿级储能战场讨论，钠离子、液流等非锂技术及LCOS拐点受关注。AIDC端，哈佛研究称美国最大数据中心合计用电量超过一些国家；2026年美国数据中心建设成本同比涨13%，BAAJA法案若落地或让数据中心十年承担约550亿美元输电成本。国内首条195公里纯氢长输管道启运，核准年输氢10万吨；APEC深圳会议全场景使用绿电606万度，减碳约3215吨。风电政策继续鼓励海上风电、海洋能。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-21.mp3",
+    "length": 2061255,
+    "duration_hms": "04:48",
+    "duration_sec": 288.9,
+    "image": null,
+    "wav_url": null
   }
 ]
