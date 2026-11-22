@@ -629,5 +629,18 @@
     "duration_sec": 288.9,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-22",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-22｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日十条：中天科技海缆预中标欧洲大长度高压海缆供货项目，金额约12.09亿元，海上风电装备出海再落一子；材料侧两条并行——报道称中国将部分稀土及相关技术的额外出口管制暂停期延长至2027年1月，欧洲供应依赖未解；Niron Magnetics 宣布在阿拉巴马多森投资18亿美元建无稀土永磁制造园区；印度 Midwest Energy 在7280 crore卢比的烧结稀土永磁制造计划下收到意向书，规划年产能1200吨、销售激励价每公斤505.05卢比。AIDC 侧风向转谨慎：全球数据中心最密集的弗吉尼亚劳登县暂停受理数据中心与变电站申请一年；CoreWeave 被指负债470亿美元，芯片与客户合同抵押贷款受审视。国内研究给出几个坐标：2026年9月电网侧独立储能占当月新增功率85.3%，可再生能源制氢建成产能超35万吨/年、占全球一半以上但占全国氢气产量不足1%，2025年动力电池装车769.7GWh、磷酸铁锂占81.2%。此外 Jackery 与 Every Electric 推出即插即用虚拟电厂。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-22.mp3",
+    "length": 2162732,
+    "duration_hms": "05:05",
+    "duration_sec": 305.8,
+    "image": null,
+    "wav_url": null
   }
 ]
