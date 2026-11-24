@@ -655,5 +655,18 @@
     "duration_sec": 313.7,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-24",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-24｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "国内政策端，四部门印发《绿色交通发展“十五五”规划》，明确补能网络、零碳公路运输通道和绿色燃料加注布局；风电截至9月底累计并网7亿千瓦、同比增长20.4%，海上风电4984万千瓦。海外市场，Waaree Forever Energies与SECI签署700MW光伏+700MW/2800MWh储能25年PPA，电价INR 5.99/kWh；Fluence FY26收入增3.1%但毛利率降至2.8%、净亏2.739亿美元，储能在手订单升至16.8GW。数据中心用能方面，Meta称2025年净排放增45%至1180万吨CO2e并重估2030净零目标；哈佛研究称403个超大规模数据中心排放被低估三倍；美国仅建设所需高压输电线路的10%。沙特将自消费规则上限从2MW提高至50MW，英国842家企业可能面临可再生电力声明审查。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-24.mp3",
+    "length": 2412390,
+    "duration_hms": "05:47",
+    "duration_sec": 347.4,
+    "image": null,
+    "wav_url": null
   }
 ]
