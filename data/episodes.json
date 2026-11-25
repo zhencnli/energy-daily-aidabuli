@@ -668,5 +668,18 @@
     "duration_sec": 347.4,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-25",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-25｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日核心：中国将对美国特定镓、锗、锑及超硬材料出口限制暂停延长至2027年1月27日；大唐5GWh储能招标明确电芯314-700Ah、循环≥6000次；华润308MW海上风电招标28台11MW机组；Fluence第四季度订单35亿美元创纪录、在手订单89亿美元；河北宽城1200MWh独立储能投资9.53亿元、明年初商业化。另有江西“十五五”规划提出2030年风光生物质新增18GW以上。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-25.mp3",
+    "length": 2240282,
+    "duration_hms": "05:18",
+    "duration_sec": 318.7,
+    "image": null,
+    "wav_url": null
   }
 ]
