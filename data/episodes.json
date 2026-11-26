@@ -681,5 +681,18 @@
     "duration_sec": 318.7,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-26",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-26｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日主线仍是“电网与储能跟不上装机和负荷”。COP31前夕，行业称全球逾2000GW可再生能源项目在排队并网，IEA估算2025年至少1700GW先进阶段可再生项目和600GW公用事业级电池项目待并网。贸易端，美国USTR拟对韩国商品加征最高15%、对马来西亚最高18%的“产能过剩”关税，涉及包括中国、欧盟、日本在内的14个经济体。国内储能招投标密集：山东滨州200MW/400MWh设备第一候选万帮数字能源报价2.48亿元、约0.62元/Wh；无棣300MW/600MWh项目计划投资约8.76亿元；山西河津400MW/800MWh EPC候选单价0.7821—0.8123元/Wh。海外市场，意大利MACSE储能拍卖均价溢价降12%至11382欧元/MWh/年，Enel获7.3GWh；晶科越南基地前九月营收49.4亿元、净亏约2900万美元。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-26.mp3",
+    "length": 2285255,
+    "duration_hms": "05:26",
+    "duration_sec": 326.2,
+    "image": null,
+    "wav_url": null
   }
 ]
