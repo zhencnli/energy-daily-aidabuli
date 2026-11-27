@@ -694,5 +694,18 @@
     "duration_sec": 326.2,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-27",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-27｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日核心：美国联邦政府以2.8亿美元有条件贷款支持Grid United总额40亿美元的怀俄明东西电网互联项目，线路长106英里，建成后东西电网间输电能力翻倍；2026年清洁能源私募股权交易额已创纪录达1265亿美元、311笔，但三季度环比下降48.9%至185亿美元；美国拟对包括中国、欧盟在内的14个贸易伙伴加征301关税，对华部分商品最高20%、对欧盟最高15%；英国海上风电退役费用研究显示，同等规模风机的退役拨备估算可相差十倍，单台平均约90万至150万英镑；印度Feston ESS在金奈投产3 GWh电池储能制造厂，具备cell-to-pack能力。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-27.mp3",
+    "length": 2771741,
+    "duration_hms": "06:47",
+    "duration_sec": 407.2,
+    "image": null,
+    "wav_url": null
   }
 ]
