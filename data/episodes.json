@@ -707,5 +707,18 @@
     "duration_sec": 407.2,
     "image": null,
     "wav_url": null
+  },
+  {
+    "date": "2026-11-28",
+    "column": "brief",
+    "title": "Energy Daily · 2026-11-28｜今日新能源头条",
+    "subtitle": "风电 · 光伏 · 储能 · AIDC · 新能源",
+    "summary": "今日最值得关注的是国内政策与标准：宁夏提出“十五五”新能源装机突破1亿千瓦、占总装机70%，储能突破3000万千瓦；工信部发布首个纯电动商用车底盘换电行业标准，为重型卡车跨品牌换电铺路。海外方面，英国GRIDSERVE获4.2亿英镑融资，印度MNRE要求ALMM List-II光伏电池型号统一12位编码，西班牙拨款2.004亿欧元支持可再生能源、储能、氢能等制造。市场数据上，10月全国交易绿证7523万个，环比增28.74%、同比增12.98%。",
+    "url": "https://aili-1500638180.cos.ap-shanghai.myqcloud.com/energy-daily/audio/energydaily-2026-11-28.mp3",
+    "length": 2297363,
+    "duration_hms": "05:28",
+    "duration_sec": 328.2,
+    "image": null,
+    "wav_url": null
   }
 ]
